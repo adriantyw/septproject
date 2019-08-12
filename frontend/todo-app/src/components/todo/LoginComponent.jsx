@@ -1,5 +1,7 @@
 import React, { Component } from "react";
+import { MDBContainer, MDBRow, MDBCol, MDBInput, MDBBtn } from 'mdbreact';
 import AuthenticationService from "./AuthenticationService.js";
+import { Link } from 'react-router-dom'
 
 class LoginComponent extends Component
 {
@@ -87,36 +89,48 @@ class LoginComponent extends Component
   render()
   {
     return (
-      <div>
+      <MDBContainer>
         <h1>Login</h1>
-        <div className="container-fluid">
-          {/*<ShowInvalidCredentials hasLoginFailed={this.state.hasLoginFailed}/>*/}
-          {this.state.hasLoginFailed && (
-            <div className="alert alert-warning">
-              Invalid Username or Password
+        <MDBRow>
+          <MDBCol md="7">
+            <form>
+              {/*<ShowInvalidCredentials hasLoginFailed={this.state.hasLoginFailed}/>*/}
+              {this.state.hasLoginFailed && (
+                <div className="alert alert-warning">
+                  Invalid Username or Password
             </div>
-          )}
-          {this.state.showSuccessMessage && <div>Login Sucessful</div>}
-          {/*<ShowLoginSuccessMessage showSuccessMessage={this.state.showSuccessMessage}/>*/}
-          User Name:{" "}
-          <input
-            type="text"
-            name="username"
-            value={this.state.username}
-            onChange={this.handleChange}
-          />
-          Password:{" "}
-          <input
-            type="password"
-            name="password"
-            value={this.state.password}
-            onChange={this.handleChange}
-          />
-          <button className="btn btn-success" onClick={this.loginClicked}>
-            Login
-          </button>
-        </div>
-      </div>
+              )}
+              {this.state.showSuccessMessage && <div>Login Sucessful</div>}
+              {/*<ShowLoginSuccessMessage showSuccessMessage={this.state.showSuccessMessage}/>*/}
+              User Name:{" "}
+              <div className="grey-text">
+                <MDBInput
+                  type="text"
+                  name="username"
+                  value={this.state.username}
+                  onChange={this.handleChange}
+                />
+                Password:{" "}
+                <MDBInput
+                  icon="lock"
+                  type="password"
+                  name="password"
+                  value={this.state.password}
+                  onChange={this.handleChange}
+                />
+              </div>
+              <div className="text-center">
+                <MDBBtn onClick={this.loginClicked}>
+                  Login
+          </MDBBtn>
+                <Link className="nav-link" to="/register">
+                  Register
+          </Link>
+              </div>
+            </form>
+          </MDBCol>
+        </MDBRow>
+      </MDBContainer>
     );
   }
 }
