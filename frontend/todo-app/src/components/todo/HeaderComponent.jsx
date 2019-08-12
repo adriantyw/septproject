@@ -13,8 +13,8 @@ class HeaderComponent extends Component
 
         return (
             <header>
-                <nav className="navbar navbar-expand-md navbar-dark bg-dark">
-                    <div><img src={logo} className="App-logo" alt="logo" /></div>
+                <nav className="navbar navbar-expand-md navbar-custom">
+                    <a class="navbar-brand"><img src={logo} className="App-logo" alt="logo" /></a>
                     <ul className="navbar-nav">
                         {isUserLoggedIn && <li><Link className="nav-link" to="/welcome/SEPT">Home</Link></li>}
                         {isUserLoggedIn && <li><Link className="nav-link" to="/todos">Todos</Link></li>}
