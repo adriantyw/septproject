@@ -3,7 +3,6 @@ import { MDBContainer, MDBRow, MDBCol, MDBInput, MDBBtn } from 'mdbreact';
 import AuthenticationService from "./AuthenticationService.js";
 import { Link } from 'react-router-dom'
 
-
 class LoginComponent extends Component
 {
   constructor(props)

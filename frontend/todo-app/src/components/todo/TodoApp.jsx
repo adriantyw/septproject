@@ -10,6 +10,7 @@ import LogoutComponent from './LogoutComponent.jsx'
 import WelcomeComponent from './WelcomeComponent.jsx'
 import TodoComponent from './TodoComponent.jsx'
 import RegisterComponent from './RegisterComponent.jsx'
+import CalendarComponent from './CalendarComponent.jsx';
 
 class TodoApp extends Component
 {
@@ -21,7 +22,7 @@ class TodoApp extends Component
                     <>
                         <HeaderComponent />
                         <Switch>
-                            <Route path="/" exact component={LoginComponent} />
+                            <Route path="/" exact component={CalendarComponent} />
                             <Route path="/login" component={LoginComponent} />
                             <Route path="/register" component={RegisterComponent} />
                             <AuthenticatedRoute path="/welcome/:name" component={WelcomeComponent} />
