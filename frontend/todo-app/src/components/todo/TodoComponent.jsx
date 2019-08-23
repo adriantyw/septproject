@@ -16,7 +16,6 @@ class TodoComponent extends Component {
 
         this.onSubmit = this.onSubmit.bind(this)
         this.validate = this.validate.bind(this)
-
     }
 
     componentDidMount() {
