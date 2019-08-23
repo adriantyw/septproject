@@ -22,7 +22,7 @@ class TodoApp extends Component
                     <>
                         <HeaderComponent />
                         <Switch>
-                            <Route path="/" exact component={CalendarComponent} />
+                            <Route path="/" exact component={LoginComponent} />
                             <Route path="/login" component={LoginComponent} />
                             <Route path="/register" component={RegisterComponent} />
                             <AuthenticatedRoute path="/welcome/:name" component={WelcomeComponent} />
