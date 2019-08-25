@@ -16,6 +16,11 @@ public class CalendarEvent
 	private String title;
 	private Date date;
 
+	public CalendarEvent() 
+	{
+
+	}
+	
 	public CalendarEvent(long id, String username, String title, Date date) 
 	{
 		super();

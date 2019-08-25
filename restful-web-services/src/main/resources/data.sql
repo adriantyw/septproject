@@ -12,3 +12,9 @@ values(1, 'sept', 'Birthday', sysdate());
 
 insert into market_item(id, username, item_name, price)
 values(1, 'sept', 'Book', 20.50);
+
+insert into market_item(id, username, item_name, price)
+values(2, 'Homy', 'Laptop', 20.50);
+
+insert into market_item(id, username, item_name, price)
+values(3, 'Thanos', 'Gauntlet', 2.50);

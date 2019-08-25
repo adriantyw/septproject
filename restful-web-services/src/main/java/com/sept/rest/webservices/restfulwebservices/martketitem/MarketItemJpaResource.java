@@ -32,7 +32,7 @@ public class MarketItemJpaResource
 	
 	// Gets all items being sold on the market
 	@GetMapping("/jpa/users/marketplace")
-	public List<MarketItem> getAllItems(@PathVariable String username)
+	public List<MarketItem> getAllItems()
 	{
 		return ItemJpaRepository.findAll();
 	}
