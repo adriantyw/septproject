@@ -12,20 +12,18 @@ class MarketplaceComponent extends Component
             items: []
          }
 
-      this.refreshTodos = this.refreshTodos.bind(this)
-
    }
 
    componentDidMount()
    {
       console.log('componentDidMount')
-      this.refreshTodos();
+      this.refreshItems();
       console.log(this.state)
    }
 
-   refreshTodos()
+   refreshItems()
    {
-      let username = AuthenticationService.getLoggedInUserName()
+
       ItemDataService.retrieveAllItems()
          .then(
             response =>
@@ -39,9 +37,8 @@ class MarketplaceComponent extends Component
    render()
    {
       return (
-         <div>
-            <h1>Market Place</h1>
-            {this.state.message && <div class="alert alert-success">{this.state.message}</div>}
+         <div class="page-header">
+            <h2>Marketplace</h2>
             <div className="container">
                <table className="table">
                   <thead>
@@ -49,8 +46,7 @@ class MarketplaceComponent extends Component
                         <th>Name</th>
                         <th>User Name</th>
                         <th>Price</th>
-                        <th>Update</th>
-                        <th>Delete</th>
+                        <th>Buy</th>
                      </tr>
                   </thead>
                   <tbody>
@@ -61,15 +57,14 @@ class MarketplaceComponent extends Component
                                  <td>{item.itemName}</td>
                                  <td>{item.username}</td>
                                  <td>{item.price}</td>
-                                 <td><button className="btn btn-success" onClick={() => this.updateitemClicked(item.id)}>Update</button></td>
-                                 <td><button className="btn btn-warning" onClick={() => this.deleteitemClicked(item.id)}>Delete</button></td>
+                                 <td><button className="btn btn-dark" onClick={() => this.updateitemClicked(item.id)}>Buy</button></td>
                               </tr>
                         )
                      }
                   </tbody>
                </table>
                <div className="row">
-                  <button className="btn btn-success" onClick={this.additemClicked}>Add</button>
+                  <button className="btn btn-dark" onClick={this.createItem}>Add</button>
                </div>
             </div>
          </div>

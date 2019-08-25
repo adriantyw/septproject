@@ -16,7 +16,7 @@ class CalendarComponent extends Component
     constructor(props)
     {
         super(props);
-        this.width = props.width || "1465px";
+        this.width = props.width || "100%";
         this.style = props.style || {};
         this.style.width = this.width; // add this
     }
