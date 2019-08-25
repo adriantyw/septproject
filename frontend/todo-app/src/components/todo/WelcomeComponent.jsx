@@ -2,9 +2,11 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import HelloWorldService from '../../api/todo/HelloWorldService.js'
 
-class WelcomeComponent extends Component {
+class WelcomeComponent extends Component
+{
 
-    constructor(props) {
+    constructor(props)
+    {
         super(props)
         this.retrieveWelcomeMessage = this.retrieveWelcomeMessage.bind(this)
         this.state = {
@@ -14,16 +16,16 @@ class WelcomeComponent extends Component {
         this.handleError = this.handleError.bind(this)
     }
 
-    render() {
+    render()
+    {
         return (
             <>
                 <h1>Welcome!</h1>
                 <div className="container">
                     Welcome {this.props.match.params.name}.
-                    You can manage your todos <Link to="/todos">here</Link>.
+                    You can manage your todos <Link to="/calendar">here</Link>.
                 </div>
                 <div className="container">
-                    Click here to get a customized welcome message.
                     <button onClick={this.retrieveWelcomeMessage}
                         className="btn btn-success">Get Welcome Message</button>
                 </div>
@@ -35,7 +37,8 @@ class WelcomeComponent extends Component {
         )
     }
 
-    retrieveWelcomeMessage() {
+    retrieveWelcomeMessage()
+    {
         // HelloWorldService.executeHelloWorldService()
         // .then( response => this.handleSuccessfulResponse(response) )
 
@@ -47,12 +50,14 @@ class WelcomeComponent extends Component {
             .catch(error => this.handleError(error))
     }
 
-    handleSuccessfulResponse(response) {
+    handleSuccessfulResponse(response)
+    {
         console.log(response)
         this.setState({ welcomeMessage: response.data.message })
     }
 
-    handleError(error) {
+    handleError(error)
+    {
 
         console.log(error.response)
 
@@ -61,7 +66,8 @@ class WelcomeComponent extends Component {
         if (error.message)
             errorMessage += error.message
 
-        if (error.response && error.response.data) {
+        if (error.response && error.response.data)
+        {
             errorMessage += error.response.data.message
         }
 

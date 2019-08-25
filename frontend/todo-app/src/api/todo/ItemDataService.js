@@ -13,22 +13,22 @@ class EventDataService
         return axios.get(`${JPA_API_URL}/users/${name}/marketplace`);
     }
 
-    retrieveEvent(name, id) 
+    retrieveItem(name, id) 
     {
         return axios.get(`${JPA_API_URL}/users/${name}/marketplace/${id}`);
     }
 
-    deleteEvent(name, id) 
+    deleteItem(name, id) 
     {
         return axios.delete(`${JPA_API_URL}/users/${name}/marketplace/${id}`);
     }
 
-    updateEvent(name, id, item) 
+    updateItem(name, id, item) 
     {
         return axios.put(`${JPA_API_URL}/users/${name}/marketplace/${id}`, item);
     }
 
-    createEvent(name, item) 
+    createItem(name, item) 
     {
         return axios.post(`${JPA_API_URL}/users/${name}/marketplace/`, item);
     }

@@ -11,6 +11,7 @@ import WelcomeComponent from './WelcomeComponent.jsx'
 import TodoComponent from './TodoComponent.jsx'
 import RegisterComponent from './RegisterComponent.jsx'
 import CalendarComponent from './CalendarComponent.jsx';
+import MarketPlaceComponent from './MarketplaceComponent.jsx'
 
 class TodoApp extends Component
 {
@@ -28,6 +29,8 @@ class TodoApp extends Component
                             <AuthenticatedRoute path="/welcome/:name" component={WelcomeComponent} />
                             <AuthenticatedRoute path="/todos/:id" component={TodoComponent} />
                             <AuthenticatedRoute path="/todos" component={ListTodosComponent} />
+                            <AuthenticatedRoute path="/calendar" component={CalendarComponent} />
+                            <AuthenticatedRoute path="/marketplace" component={MarketPlaceComponent} />
                             <AuthenticatedRoute path="/logout" component={LogoutComponent} />
 
                             <Route component={ErrorComponent} />
