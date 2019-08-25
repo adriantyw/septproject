@@ -17,7 +17,7 @@ class HeaderComponent extends Component
                     <a class="navbar-brand"><img src={logo} className="App-logo" alt="logo" /></a>
                     <ul className="navbar-nav">
                         {isUserLoggedIn && <li><Link className="nav-link" to="/welcome/SEPT">Home</Link></li>}
-                        {isUserLoggedIn && <li><Link className="nav-link" to="/todos">Todos</Link></li>}
+                        {isUserLoggedIn && <li><Link className="nav-link" to="/todos">Event Planner</Link></li>}
                         {isUserLoggedIn && <li><Link className="nav-link" to="/calendar">Calendar</Link></li>}
                         {isUserLoggedIn && <li><Link className="nav-link" to="/marketplace">Marketplace</Link></li>}
                     </ul>

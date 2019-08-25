@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import ItemDataService from '../../api/todo/ItemDataService.js'
+import AuthenticationService from './AuthenticationService.js'
 
 class MarketplaceComponent extends Component
 {
@@ -7,55 +9,72 @@ class MarketplaceComponent extends Component
       super(props)
       this.state =
          {
-            products:
-               [
-                  { id: 1, name: 'Laptop', user: 'sexlord69' },
-                  { id: 2, name: 'Book', user: 'sexlord69' },
-                  { id: 3, name: 'Mouse', user: 'sexlord69' },
-                  { id: 4, name: 'Keyboard', user: 'sexlord69' }
-               ]
+            items: []
          }
+
+      this.refreshTodos = this.refreshTodos.bind(this)
+
    }
 
-
-   renderTableHeader()
+   componentDidMount()
    {
-      let header = Object.keys(this.state.products[0])
-      return header.map((key, index) =>
-      {
-         return <th key={index}>{key.toUpperCase()}</th>
-      })
+      console.log('componentDidMount')
+      this.refreshTodos();
+      console.log(this.state)
    }
 
-   renderTableData()
+   refreshTodos()
    {
-      return this.state.products.map((products, index) =>
-      {
-         const { id, name, user } = products //destructuring
-         return (
-            <tr key={id}>
-               <td>{id}</td>
-               <td>{name}</td>
-               <td>{user}</td>
-            </tr>
+      let username = AuthenticationService.getLoggedInUserName()
+      ItemDataService.retrieveAllItems()
+         .then(
+            response =>
+            {
+               //console.log(response);
+               this.setState({ items: response.data })
+            }
          )
-      })
    }
 
    render()
    {
       return (
          <div>
-            <h1 id='title'>Marketplace</h1>
-            <table id='products'>
-               <tbody>
-                  <tr>{this.renderTableHeader()}</tr>
-                  {this.renderTableData()}
-               </tbody>
-            </table>
+            <h1>Market Place</h1>
+            {this.state.message && <div class="alert alert-success">{this.state.message}</div>}
+            <div className="container">
+               <table className="table">
+                  <thead>
+                     <tr>
+                        <th>Name</th>
+                        <th>User Name</th>
+                        <th>Price</th>
+                        <th>Update</th>
+                        <th>Delete</th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     {
+                        this.state.items.map(
+                           item =>
+                              <tr key={item.id}>
+                                 <td>{item.itemName}</td>
+                                 <td>{item.username}</td>
+                                 <td>{item.price}</td>
+                                 <td><button className="btn btn-success" onClick={() => this.updateitemClicked(item.id)}>Update</button></td>
+                                 <td><button className="btn btn-warning" onClick={() => this.deleteitemClicked(item.id)}>Delete</button></td>
+                              </tr>
+                        )
+                     }
+                  </tbody>
+               </table>
+               <div className="row">
+                  <button className="btn btn-success" onClick={this.additemClicked}>Add</button>
+               </div>
+            </div>
          </div>
       )
    }
 }
 
-export default MarketplaceComponent //exporting a component make it reusable and this is the beauty of react
+export default MarketplaceComponent 
