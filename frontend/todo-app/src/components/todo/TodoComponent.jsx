@@ -4,8 +4,10 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import TodoDataService from '../../api/todo/TodoDataService.js'
 import AuthenticationService from './AuthenticationService.js'
 
-class TodoComponent extends Component {
-    constructor(props) {
+class TodoComponent extends Component
+{
+    constructor(props)
+    {
         super(props)
 
         this.state = {
@@ -19,9 +21,11 @@ class TodoComponent extends Component {
 
     }
 
-    componentDidMount() {
+    componentDidMount()
+    {
 
-        if (this.state.id === -1) {
+        if (this.state.id === -1)
+        {
             return
         }
 
@@ -34,15 +38,19 @@ class TodoComponent extends Component {
             }))
     }
 
-    validate(values) {
+    validate(values)
+    {
         let errors = {}
-        if (!values.description) {
+        if (!values.description)
+        {
             errors.description = 'Enter a Description'
-        } else if (values.description.length < 5) {
+        } else if (values.description.length < 5)
+        {
             errors.description = 'Enter atleast 5 Characters in Description'
         }
 
-        if (!moment(values.targetDate).isValid()) {
+        if (!moment(values.targetDate).isValid())
+        {
             errors.targetDate = 'Enter a valid Target Date'
         }
 
@@ -50,7 +58,8 @@ class TodoComponent extends Component {
 
     }
 
-    onSubmit(values) {
+    onSubmit(values)
+    {
         let username = AuthenticationService.getLoggedInUserName()
 
         let todo = {
@@ -59,10 +68,12 @@ class TodoComponent extends Component {
             targetDate: values.targetDate
         }
 
-        if (this.state.id === -1) {
+        if (this.state.id === -1)
+        {
             TodoDataService.createTodo(username, todo)
                 .then(() => this.props.history.push('/todos'))
-        } else {
+        } else
+        {
             TodoDataService.updateTodo(username, this.state.id, todo)
                 .then(() => this.props.history.push('/todos'))
         }
@@ -70,7 +81,8 @@ class TodoComponent extends Component {
         console.log(values);
     }
 
-    render() {
+    render()
+    {
 
         let { description, targetDate } = this.state
         //let targetDate = this.state.targetDate
