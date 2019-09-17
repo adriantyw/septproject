@@ -3,6 +3,15 @@ import './style.css';
 
 class AddMarketPlaceItemPanel extends React.Component {
 
+<<<<<<< HEAD
+=======
+    submitForm() {
+
+        
+
+    }
+
+>>>>>>> 137595f4ae2f3b580078062d68fdbb04aaad20e6
     render() {
         return (
             <div className='addItemPopUp'>
@@ -15,6 +24,7 @@ class AddMarketPlaceItemPanel extends React.Component {
                             <input type="text" name="itemName"/>
                         </label>
                         <label>
+<<<<<<< HEAD
                             Item Description:
                             <input type="text" name="itemDescription"/>
                         </label>
@@ -23,6 +33,17 @@ class AddMarketPlaceItemPanel extends React.Component {
 
 
 
+=======
+                            Username:
+                            <input type="text" name="username"/>
+                        </label>
+                        <label>
+                            Item Price:
+                            <input type="integer" name="itemPrice"/>
+                        </label>
+                        <input type="submit" value="Submit" onclick={this.submitForm()}/>
+                    </form>
+>>>>>>> 137595f4ae2f3b580078062d68fdbb04aaad20e6
                     {/*<button onClick={this.props.closePop}>Add Item</button>*/}
                 </div>
             </div>
