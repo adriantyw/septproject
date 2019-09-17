@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import ItemDataService from '../../api/todo/ItemDataService.js';
 
-class MarketplaceComponent extends Component
+class MarketPlacePanel extends Component
 {
-   constructor(props)
+    constructor(props)
    {
       super(props)
       this.state =
@@ -12,15 +12,16 @@ class MarketplaceComponent extends Component
       }
    }
 
-   componentDidMount()
-   {
-      console.log('componentDidMount')
-      this.refreshItems();
-      console.log(this.state)
-   }
+    componentDidMount()
+    {
+       console.log('componentDidMount')
+       this.refreshItems();
+       console.log(this.state)
+    }
 
    refreshItems()
    {
+
       ItemDataService.retrieveAllItems()
          .then(
             response =>
@@ -30,19 +31,10 @@ class MarketplaceComponent extends Component
             }
          )
    }
-
-   pageRedirect()
-   {
-         //window.location = '/AddMarketPlaceItemPanel'
-   }
-
-   render()
-   {
-      return (
-         <div class="page-header">
-            <h2>Marketplace</h2>
-            <div className="container">
-               <table className="table">
+    render()
+    {
+        return(
+            <table className="table">
                   <thead>
                      <tr>
                         <th>Name</th>
@@ -65,13 +57,8 @@ class MarketplaceComponent extends Component
                      }
                   </tbody>
                </table>
-               <div className="row">
-                  <button className="btn btn-dark" onClick={this.pageRedirect()}>Add Item</button>
-               </div>
-            </div>
-         </div>
-      )
-   }
+        );
+    }
 }
 
-export default MarketplaceComponent 
+export default MarketPlacePanel;
