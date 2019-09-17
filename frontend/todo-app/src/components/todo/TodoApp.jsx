@@ -12,6 +12,9 @@ import TodoComponent from './TodoComponent.jsx'
 import RegisterComponent from './RegisterComponent.jsx'
 import CalendarComponent from './CalendarComponent.jsx';
 import MarketPlaceComponent from './MarketplaceComponent.jsx'
+import AddMarketPlaceItemPanel from './AddMarketPlaceItemPanel.jsx'
+
+// huidiwawad
 
 class TodoApp extends Component
 {
@@ -31,6 +34,7 @@ class TodoApp extends Component
                             <AuthenticatedRoute path="/eventplanner" component={EventPlannerComponent} />
                             <AuthenticatedRoute path="/calendar" component={CalendarComponent} />
                             <AuthenticatedRoute path="/marketplace" component={MarketPlaceComponent} />
+                            <AuthenticatedRoute path="/additempanel" component={AddMarketPlaceItemPanel} />
                             <AuthenticatedRoute path="/logout" component={LogoutComponent} />
 
                             <Route component={ErrorComponent} />
