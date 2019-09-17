@@ -18,6 +18,7 @@ public class MarketItem
 	{
 
 	}
+	
 	public MarketItem(long id, String itemName, String username, double price) 
 	{
 		super();
