@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
-<<<<<<< HEAD
 import { Link } from 'react-router-dom'
-=======
->>>>>>> 137595f4ae2f3b580078062d68fdbb04aaad20e6
 import ItemDataService from '../../api/todo/ItemDataService.js';
 
 class MarketplaceComponent extends Component
@@ -13,11 +10,7 @@ class MarketplaceComponent extends Component
       this.state =
       {
             items: []
-<<<<<<< HEAD
-         }
-=======
       }
->>>>>>> 137595f4ae2f3b580078062d68fdbb04aaad20e6
    }
 
    componentDidMount()
@@ -41,11 +34,7 @@ class MarketplaceComponent extends Component
 
    pageRedirect()
    {
-<<<<<<< HEAD
       //window.location = '/AddMarketPlaceItemPanel'
-=======
-         //window.location = '/AddMarketPlaceItemPanel'
->>>>>>> 137595f4ae2f3b580078062d68fdbb04aaad20e6
    }
 
    render()
@@ -78,13 +67,9 @@ class MarketplaceComponent extends Component
                   </tbody>
                </table>
                <div className="row">
-<<<<<<< HEAD
                   <Link to="/additempanel">
                      <button className="btn btn-dark">Add Item</button>
                   </Link>
-=======
-                  <button className="btn btn-dark" onClick={this.pageRedirect()}>Add Item</button>
->>>>>>> 137595f4ae2f3b580078062d68fdbb04aaad20e6
                </div>
             </div>
          </div>
