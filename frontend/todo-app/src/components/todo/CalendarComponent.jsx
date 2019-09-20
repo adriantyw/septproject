@@ -18,7 +18,7 @@ class CalendarComponent extends Component
         super(props);
         this.width = props.width || "100%";
         this.style = props.style || {};
-        this.style.width = this.width; // add this
+        this.style.width = this.width;
     }
 
 
@@ -189,9 +189,9 @@ class CalendarComponent extends Component
         this.setState({
             selectedDay: day
         }, () =>
-            {
-                console.log("SELECTED DAY: ", this.state.selectedDay);
-            });
+        {
+            console.log("SELECTED DAY: ", this.state.selectedDay);
+        });
 
         this.props.onDayClick && this.props.onDayClick(e, day);
     }
@@ -294,6 +294,8 @@ class CalendarComponent extends Component
                             {trElems}
                         </tbody>
                     </table>
+                    <button className="btn btn-success" >Add Event</button>
+                    <button className="btn btn-success" >Remove Event</button>
                 </MDBContainer>
             </div>
 
