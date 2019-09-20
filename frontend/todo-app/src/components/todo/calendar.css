@@ -9,13 +9,15 @@ tr {
 
 .calendar-container {
     border: 2px solid rgb(122, 24, 24);
+    display: inline-block;
+    width: 65%;
 }
 
 .calendar {
     background-color: white;
     border-spacing: 0;
     border-collapse: collapse;
-    width: 100%;
+    width: 75%;
 }
 
 .calendar-header {
@@ -96,4 +98,13 @@ tr {
 
 .label-month {
     cursor: pointer;
+}
+
+.div1 {
+    width: 50%
+}
+
+.inlineblock {
+    width: 35%;
+    display: inline-block;
 }

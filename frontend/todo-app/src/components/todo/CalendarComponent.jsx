@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { MDBContainer } from 'mdbreact'
 import moment from 'moment'
+import EventDataService from '../../api/todo/EventDataService.js'
 import './calendar.css';
 
 class CalendarComponent extends Component
@@ -16,9 +17,6 @@ class CalendarComponent extends Component
     constructor(props)
     {
         super(props);
-        this.width = props.width || "100%";
-        this.style = props.style || {};
-        this.style.width = this.width;
     }
 
 
@@ -265,8 +263,8 @@ class CalendarComponent extends Component
         })
 
         return (
-            <div className="calendar-container" style={this.style}>
-                <MDBContainer>
+            <div>
+                <div className="calendar-container">
                     <h1>Select An Event</h1>
                     <table className="calendar">
                         <thead>
@@ -294,9 +292,29 @@ class CalendarComponent extends Component
                             {trElems}
                         </tbody>
                     </table>
-                    <button className="btn btn-success" >Add Event</button>
-                    <button className="btn btn-success" >Remove Event</button>
-                </MDBContainer>
+                </div>
+                <div className="inlineblock">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>User Name</th>
+                                <th>Title</th>
+                                <th>Date</th>
+                                <th>Update</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td><button className="btn btn-success">Update</button></td>
+                                <td><button className="btn btn-warning">Delete</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
 
