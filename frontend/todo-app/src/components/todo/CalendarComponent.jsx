@@ -231,6 +231,18 @@ class CalendarComponent extends Component
         this.props.onDayClick && this.props.onDayClick(e, day);
     }
 
+    showEvents = (e, day) =>
+    {
+        this.setState({
+            selectedDay: day
+        }, () =>
+        {
+            console.log("SELECTED DAY: ", this.state.selectedDay);
+        });
+
+        this.props.onDayClick && this.props.onDayClick(e, day);
+    }
+
     render()
     {
         // Map the weekdays i.e Sun, Mon, Tue etc as <td>
@@ -355,7 +367,7 @@ class CalendarComponent extends Component
                                         <tr key={events.id}>
                                             <td>{events.username}</td>
                                             <td>{events.title}</td>
-                                            <td>{moment(events.targetDate).format('YYYY-MM-DD')}</td>
+                                            <td>{moment(events.date).format('YYYY-MM-DD')}</td>
                                             <td><button className="btn btn-success" onClick={() => this.updateTodoClicked(events.id)}>Update</button></td>
                                             <td><button className="btn btn-warning" onClick={() => this.deleteTodoClicked(events.id)}>Delete</button></td>
                                         </tr>
