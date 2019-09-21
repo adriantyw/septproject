@@ -13,7 +13,8 @@ class CalendarComponent extends Component
         today: moment(),
         showMonthPopup: false,
         showYearPopup: false,
-        selectedDay: null,
+        eventDay: null,
+        hasEvents: false,
         events: []
     }
 
@@ -219,28 +220,16 @@ class CalendarComponent extends Component
         );
     }
 
-    onDayClick = (e, day) =>
-    {
-        this.setState({
-            selectedDay: day
-        }, () =>
-        {
-            console.log("SELECTED DAY: ", this.state.selectedDay);
-        });
-
-        this.props.onDayClick && this.props.onDayClick(e, day);
-    }
-
     showEvents = (e, day) =>
     {
         this.setState({
-            selectedDay: day
+            eventDay: day
         }, () =>
         {
-            console.log("SELECTED DAY: ", this.state.selectedDay);
+            console.log("EVENTS DAY: ", this.state.eventDay);
         });
 
-        this.props.onDayClick && this.props.onDayClick(e, day);
+        this.props.showEvents && this.props.showEvents(e, day);
     }
 
     render()
@@ -265,14 +254,19 @@ class CalendarComponent extends Component
         console.log("blanks: ", blanks);
 
         let daysInMonth = [];
+        let eventDay = moment();
         for (let d = 1; d <= this.daysInMonth(); d++)
         {
+            this.state.events.map(
+                events =>
+                    eventDay = moment(events.date).format("DD")
+            )
             let className = (d == this.currentDay() ? "day current-day" : "day");
-            let selectedClass = (d == this.state.selectedDay ? " selected-day " : "")
+            let showEvents = (d == eventDay ? " selected-day " : "")
             daysInMonth.push(
-                <td key={d} className={className + selectedClass} >
+                <td key={d} className={className + showEvents} >
                     <Popup
-                        trigger={<span onClick={(e) => { this.onDayClick(e, d) }}>{d}</span>
+                        trigger={<span onClick={(e) => { this.showEvents(e, d) }}>{d}</span>
                         }
                         modal
                         closeOnDocumentClick
