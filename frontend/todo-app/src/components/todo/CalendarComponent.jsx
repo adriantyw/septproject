@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { MDBContainer } from 'mdbreact'
 import moment from 'moment'
 import EventDataService from '../../api/todo/EventDataService.js'
+import AuthenticationService from './AuthenticationService.js'
+import Popup from "reactjs-popup";
 import './calendar.css';
 
 class CalendarComponent extends Component
@@ -11,12 +13,47 @@ class CalendarComponent extends Component
         today: moment(),
         showMonthPopup: false,
         showYearPopup: false,
-        selectedDay: null
+        selectedDay: null,
+        events: []
     }
+
 
     constructor(props)
     {
         super(props);
+    }
+
+    componentWillUnmount()
+    {
+        console.log('componentWillUnmount')
+    }
+
+    shouldComponentUpdate(nextProps, nextState)
+    {
+        console.log('shouldComponentUpdate')
+        console.log(nextProps)
+        console.log(nextState)
+        return true
+    }
+
+    componentDidMount()
+    {
+        console.log('componentDidMount')
+        this.refreshTodos();
+        console.log(this.state)
+    }
+
+    refreshTodos()
+    {
+        let username = AuthenticationService.getLoggedInUserName()
+        EventDataService.retrieveAllEvents(username)
+            .then(
+                response =>
+                {
+                    //console.log(response);
+                    this.setState({ events: response.data })
+                }
+            )
     }
 
 
@@ -222,7 +259,14 @@ class CalendarComponent extends Component
             let selectedClass = (d == this.state.selectedDay ? " selected-day " : "")
             daysInMonth.push(
                 <td key={d} className={className + selectedClass} >
-                    <span onClick={(e) => { this.onDayClick(e, d) }}>{d}</span>
+                    <Popup
+                        trigger={<span onClick={(e) => { this.onDayClick(e, d) }}>{d}</span>
+                        }
+                        modal
+                        closeOnDocumentClick
+                    >
+                        <span> Create Event </span>
+                    </Popup>
                 </td>
             );
         }
@@ -265,7 +309,7 @@ class CalendarComponent extends Component
         return (
             <div>
                 <div className="calendar-container">
-                    <h1>Select An Event</h1>
+                    <h1>Events</h1>
                     <table className="calendar">
                         <thead>
                             <tr className="calendar-header">
@@ -294,7 +338,7 @@ class CalendarComponent extends Component
                     </table>
                 </div>
                 <div className="inlineblock">
-                    <table>
+                    <table className="table">
                         <thead>
                             <tr>
                                 <th>User Name</th>
@@ -305,13 +349,18 @@ class CalendarComponent extends Component
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td><button className="btn btn-success">Update</button></td>
-                                <td><button className="btn btn-warning">Delete</button></td>
-                            </tr>
+                            {
+                                this.state.events.map(
+                                    events =>
+                                        <tr key={events.id}>
+                                            <td>{events.username}</td>
+                                            <td>{events.title}</td>
+                                            <td>{moment(events.targetDate).format('YYYY-MM-DD')}</td>
+                                            <td><button className="btn btn-success" onClick={() => this.updateTodoClicked(events.id)}>Update</button></td>
+                                            <td><button className="btn btn-warning" onClick={() => this.deleteTodoClicked(events.id)}>Delete</button></td>
+                                        </tr>
+                                )
+                            }
                         </tbody>
                     </table>
                 </div>
