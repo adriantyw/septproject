@@ -10,7 +10,7 @@ tr {
 .calendar-container {
     border: 2px solid rgb(122, 24, 24);
     display: inline-block;
-    width: 65%;
+    width: 55%;
 }
 
 .calendar {
@@ -105,6 +105,6 @@ tr {
 }
 
 .inlineblock {
-    width: 35%;
+    width: 30%;
     display: inline-block;
 }
