@@ -1,8 +1,6 @@
 language: java
 sudo: false
-before-install:
-- cd restful-web-services
-install:
-- mvn install
 script:
+- cd restful-web-services
+- mvn clean install
 - mvn test
