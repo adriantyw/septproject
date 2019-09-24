@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { MDBContainer } from 'mdbreact'
 import moment from 'moment'
+import EventDataService from '../../api/todo/EventDataService.js'
+import AuthenticationService from './AuthenticationService.js'
+import Popup from "reactjs-popup";
 import './calendar.css';
 
 class CalendarComponent extends Component
@@ -10,15 +13,48 @@ class CalendarComponent extends Component
         today: moment(),
         showMonthPopup: false,
         showYearPopup: false,
-        selectedDay: null
+        eventDay: null,
+        hasEvents: false,
+        events: []
     }
+
 
     constructor(props)
     {
         super(props);
-        this.width = props.width || "100%";
-        this.style = props.style || {};
-        this.style.width = this.width; // add this
+    }
+
+    componentWillUnmount()
+    {
+        console.log('componentWillUnmount')
+    }
+
+    shouldComponentUpdate(nextProps, nextState)
+    {
+        console.log('shouldComponentUpdate')
+        console.log(nextProps)
+        console.log(nextState)
+        return true
+    }
+
+    componentDidMount()
+    {
+        console.log('componentDidMount')
+        this.refreshTodos();
+        console.log(this.state)
+    }
+
+    refreshTodos()
+    {
+        let username = AuthenticationService.getLoggedInUserName()
+        EventDataService.retrieveAllEvents(username)
+            .then(
+                response =>
+                {
+                    //console.log(response);
+                    this.setState({ events: response.data })
+                }
+            )
     }
 
 
@@ -184,16 +220,16 @@ class CalendarComponent extends Component
         );
     }
 
-    onDayClick = (e, day) =>
+    showEvents = (e, day) =>
     {
         this.setState({
-            selectedDay: day
+            eventDay: day
         }, () =>
-            {
-                console.log("SELECTED DAY: ", this.state.selectedDay);
-            });
+        {
+            console.log("EVENTS DAY: ", this.state.eventDay);
+        });
 
-        this.props.onDayClick && this.props.onDayClick(e, day);
+        this.props.showEvents && this.props.showEvents(e, day);
     }
 
     render()
@@ -218,13 +254,25 @@ class CalendarComponent extends Component
         console.log("blanks: ", blanks);
 
         let daysInMonth = [];
+        let eventDay = moment();
         for (let d = 1; d <= this.daysInMonth(); d++)
         {
+            this.state.events.map(
+                events =>
+                    eventDay = moment(events.date).format("DD")
+            )
             let className = (d == this.currentDay() ? "day current-day" : "day");
-            let selectedClass = (d == this.state.selectedDay ? " selected-day " : "")
+            let showEvents = (d == eventDay ? " selected-day " : "")
             daysInMonth.push(
-                <td key={d} className={className + selectedClass} >
-                    <span onClick={(e) => { this.onDayClick(e, d) }}>{d}</span>
+                <td key={d} className={className + showEvents} >
+                    <Popup
+                        trigger={<span onClick={(e) => { this.showEvents(e, d) }}>{d}</span>
+                        }
+                        modal
+                        closeOnDocumentClick
+                    >
+                        <span> Create Event </span>
+                    </Popup>
                 </td>
             );
         }
@@ -265,9 +313,9 @@ class CalendarComponent extends Component
         })
 
         return (
-            <div className="calendar-container" style={this.style}>
-                <MDBContainer>
-                    <h1>Select An Event</h1>
+            <div>
+                <div className="calendar-container">
+                    <h1>Events</h1>
                     <table className="calendar">
                         <thead>
                             <tr className="calendar-header">
@@ -294,7 +342,34 @@ class CalendarComponent extends Component
                             {trElems}
                         </tbody>
                     </table>
-                </MDBContainer>
+                </div>
+                <div className="inlineblock">
+                    <table className="table">
+                        <thead>
+                            <tr>
+                                <th>User Name</th>
+                                <th>Title</th>
+                                <th>Date</th>
+                                <th>Update</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                this.state.events.map(
+                                    events =>
+                                        <tr key={events.id}>
+                                            <td>{events.username}</td>
+                                            <td>{events.title}</td>
+                                            <td>{moment(events.date).format('YYYY-MM-DD')}</td>
+                                            <td><button className="btn btn-success" onClick={() => this.updateTodoClicked(events.id)}>Update</button></td>
+                                            <td><button className="btn btn-warning" onClick={() => this.deleteTodoClicked(events.id)}>Delete</button></td>
+                                        </tr>
+                                )
+                            }
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
 
