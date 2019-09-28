@@ -233,6 +233,64 @@ class CalendarComponent extends Component
         this.props.showEvents && this.props.showEvents(e, day);
     }
 
+
+    // sends event data to backend
+    addEvent = (e, day) =>
+    {
+        this.setState({
+            eventDay: day
+        }, () =>
+        {
+            console.log("EVENTS DAY: ", this.state.eventDay);
+        });
+
+        this.props.showEvents && this.props.showEvents(e, day);
+    }
+
+
+    validate(values)
+    {
+        let errors = {}
+        if (!values.description)
+        {
+            errors.description = 'Enter a Description'
+        } else if (values.description.length < 5)
+        {
+            errors.description = 'Enter atleast 5 Characters in Description'
+        }
+
+        if (!moment(values.targetDate).isValid())
+        {
+            errors.targetDate = 'Enter a valid Target Date'
+        }
+
+        return errors
+
+    }
+
+    onSubmit(values)
+    {
+        let username = AuthenticationService.getLoggedInUserName()
+
+        let todo = {
+            id: this.state.id,
+            description: values.description,
+            targetDate: values.targetDate
+        }
+
+        if (this.state.id === -1)
+        {
+            TodoDataService.createTodo(username, todo)
+                .then(() => this.props.history.push('/todos'))
+        } else
+        {
+            TodoDataService.updateTodo(username, this.state.id, todo)
+                .then(() => this.props.history.push('/todos'))
+        }
+
+        console.log(values);
+    }
+
     render()
     {
         // Map the weekdays i.e Sun, Mon, Tue etc as <td>
