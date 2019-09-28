@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { MDBContainer } from 'mdbreact'
 import moment from 'moment'
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { MDBContainer, MDBRow, MDBCol, MDBInput, MDBBtn } from 'mdbreact';
 import EventDataService from '../../api/todo/EventDataService.js'
 import AuthenticationService from './AuthenticationService.js'
 import Popup from "reactjs-popup";
@@ -271,7 +272,38 @@ class CalendarComponent extends Component
                         modal
                         closeOnDocumentClick
                     >
-                        <span> Create Event </span>
+                        <span>
+                            <MDBContainer>
+                                <MDBRow>
+                                    <MDBCol md="4">
+                                        <form>
+                                            <p className="h5 text-center mb-4">New Event</p>
+                                            <div className="grey-text">
+                                                <MDBInput
+                                                    label="Event Name"
+                                                    group
+                                                    type="text"
+                                                    validate
+                                                    error="wrong"
+                                                    success="right"
+                                                />
+                                                <MDBInput
+                                                    label="Description"
+                                                    group
+                                                    type="email"
+                                                    validate
+                                                    error="wrong"
+                                                    success="right"
+                                                />
+                                            </div>
+                                            <div className="text-center">
+                                                <MDBBtn color="primary">Create</MDBBtn>
+                                            </div>
+                                        </form>
+                                    </MDBCol>
+                                </MDBRow>
+                            </MDBContainer>
+                        </span>
                     </Popup>
                 </td>
             );
