@@ -8,4 +8,4 @@ script:
 - cd restful-web-services
 - mvn clean install
 - mvn test
-- gcloud app deploy app.yaml
+- gcloud app deploy app.yaml -y
