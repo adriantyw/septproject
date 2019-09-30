@@ -8,4 +8,4 @@ script:
 - cd restful-web-services
 - mvn clean install
 - mvn test
-- mvn appengine:deployIndex app.yaml
+- mvn appengine:deploy app.yaml
