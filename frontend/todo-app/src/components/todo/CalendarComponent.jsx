@@ -9,20 +9,26 @@ import './calendar.css';
 
 class CalendarComponent extends Component
 {
-    state = {
-        dateContext: moment(),
-        today: moment(),
-        showMonthPopup: false,
-        showYearPopup: false,
-        eventDay: null,
-        hasEvents: false,
-        events: []
-    }
 
 
     constructor(props)
     {
         super(props);
+
+        this.state = {
+            selectedMonth: moment(),
+            selectedDay: moment().startOf("day"),
+            dateContext: moment(),
+            today: moment(),
+            showMonthPopup: false,
+            showYearPopup: false,
+            eventDay: null,
+            name: '',
+            targetDate: moment(new Date()).format('YYYY-MM-DD'),
+            events: []
+        }
+
+        this.onSubmit = this.onSubmit.bind(this)
     }
 
     componentWillUnmount()
@@ -120,6 +126,24 @@ class CalendarComponent extends Component
             dateContext: dateContext
         });
         this.props.onPrevMonth && this.props.onPrevMonth();
+    }
+
+    select(day)
+    {
+        this.setState({
+            selectedMonth: day.date,
+            selectedDay: day.date.clone(),
+        });
+    }
+
+    renderDayLabel()
+    {
+        const currentSelectedDay = this.state.selectedDay;
+        return (
+            <span className="box month-label">
+                {currentSelectedDay.format("DD MMMM YYYY")}
+            </span>
+        );
     }
 
     onSelectChange = (e, data) =>
@@ -248,45 +272,17 @@ class CalendarComponent extends Component
     }
 
 
-    validate(values)
-    {
-        let errors = {}
-        if (!values.description)
-        {
-            errors.description = 'Enter a Description'
-        } else if (values.description.length < 5)
-        {
-            errors.description = 'Enter atleast 5 Characters in Description'
-        }
-
-        if (!moment(values.targetDate).isValid())
-        {
-            errors.targetDate = 'Enter a valid Target Date'
-        }
-
-        return errors
-
-    }
-
     onSubmit(values)
     {
         let username = AuthenticationService.getLoggedInUserName()
 
-        let todo = {
-            id: this.state.id,
-            description: values.description,
+        let event = {
+            name: values.name,
             targetDate: values.targetDate
         }
 
-        if (this.state.id === -1)
-        {
-            TodoDataService.createTodo(username, todo)
-                .then(() => this.props.history.push('/todos'))
-        } else
-        {
-            TodoDataService.updateTodo(username, this.state.id, todo)
-                .then(() => this.props.history.push('/todos'))
-        }
+        EventDataService.createEvent(username, event)
+            .then(() => this.props.history.push('/calendar/event'))
 
         console.log(values);
     }
@@ -311,7 +307,9 @@ class CalendarComponent extends Component
         }
 
         console.log("blanks: ", blanks);
+        let selectedDay = this.state.selectedDay;
 
+        let { name, targetDate } = this.state
         let daysInMonth = [];
         let eventDay = moment();
         for (let d = 1; d <= this.daysInMonth(); d++)
@@ -325,42 +323,42 @@ class CalendarComponent extends Component
             daysInMonth.push(
                 <td key={d} className={className + showEvents} >
                     <Popup
-                        trigger={<span onClick={(e) => { this.showEvents(e, d) }}>{d}</span>
+                        trigger={<span onClick={(e) => { this.select(d) }}>{d}</span>
                         }
                         modal
                         closeOnDocumentClick
                     >
                         <span>
-                            <MDBContainer>
-                                <MDBRow>
-                                    <MDBCol md="4">
-                                        <form>
-                                            <p className="h5 text-center mb-4">New Event</p>
-                                            <div className="grey-text">
-                                                <MDBInput
-                                                    label="Event Name"
-                                                    group
-                                                    type="text"
-                                                    validate
-                                                    error="wrong"
-                                                    success="right"
-                                                />
-                                                <MDBInput
-                                                    label="Description"
-                                                    group
-                                                    type="email"
-                                                    validate
-                                                    error="wrong"
-                                                    success="right"
-                                                />
-                                            </div>
-                                            <div className="text-center">
-                                                <MDBBtn color="primary">Create</MDBBtn>
-                                            </div>
-                                        </form>
-                                    </MDBCol>
-                                </MDBRow>
-                            </MDBContainer>
+                            <div className="container">
+                                <Formik
+                                    initialValues={{ name, targetDate }}
+                                    onSubmit={this.onSubmit}
+                                    validateOnChange={false}
+                                    validateOnBlur={false}
+                                    enableReinitialize={true}
+                                >
+                                    {
+                                        (props) => (
+                                            <Form>
+                                                <ErrorMessage name="description" component="div"
+                                                    className="alert alert-warning" />
+                                                <ErrorMessage name="targetDate" component="div"
+                                                    className="alert alert-warning" />
+                                                <fieldset className="form-group">
+                                                    <label>{this.renderDayLabel()}</label>
+                                                    <Field className="form-control" type="text" name="name" />
+                                                </fieldset>
+                                                <fieldset className="form-group">
+                                                    <label>Target Date</label>
+                                                    <Field className="form-control" type="date" name="targetDate" />
+                                                </fieldset>
+                                                <button className="btn btn-success" type="submit">Create Event</button>
+                                            </Form>
+                                        )
+                                    }
+                                </Formik>
+
+                            </div>
                         </span>
                     </Popup>
                 </td>
