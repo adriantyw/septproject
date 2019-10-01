@@ -2,5 +2,5 @@ runtime: nodejs
 env: flex
 
 handlers:
-- url: /
-  script: package.json
+- url: /.*
+  script: auto
