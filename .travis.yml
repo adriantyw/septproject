@@ -8,4 +8,4 @@ script:
 - cd restful-web-services
 - mvn clean install
 - mvn test
-- gcloud -q app deploy frontend/todo-app/src/app.yaml
+- gcloud -q app deploy ../frontend/todo-app/src/app.yaml
