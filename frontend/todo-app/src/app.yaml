@@ -2,5 +2,5 @@ runtime: nodejs
 env: flex
 
 handlers:
-- url: /components/
-  script: TodoApp.jsx
+- url: /
+  script: package.json
