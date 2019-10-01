@@ -32,11 +32,6 @@ class MarketplaceComponent extends Component
          )
    }
 
-   pageRedirect()
-   {
-      //window.location = '/AddMarketPlaceItemPanel'
-   }
-
    render()
    {
       return (
@@ -60,7 +55,7 @@ class MarketplaceComponent extends Component
                                  <td>{item.itemName}</td>
                                  <td>{item.username}</td>
                                  <td>{item.price}</td>
-                                 <td><button className="btn btn-dark" onClick={() => this.updateitemClicked(item.id)}>Buy</button></td>
+                                 <td><Link to="/buyitempanel"><button className="btn btn-dark" /*onClick={() => this.updateitemClicked(item.id)}*/>Buy</button></Link></td>
                               </tr>
                         )
                      }
@@ -70,7 +65,6 @@ class MarketplaceComponent extends Component
                   <Link to="/additempanel">
                      <button className="btn btn-dark">Add Item</button>
                   </Link>
-                  <button className="btn btn-dark" onClick={this.pageRedirect()}>Add Item</button>
                </div>
             </div>
          </div>
