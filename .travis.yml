@@ -16,4 +16,4 @@ matrix:
       script: 
         - cd frontend/todo-app
         - npm install
-        - gcloud -q app deploy ../frontend/todo-app/src/app.yaml
+        - gcloud -q app deploy /src/app.yaml
