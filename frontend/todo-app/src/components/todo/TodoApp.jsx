@@ -33,8 +33,8 @@ class TodoApp extends Component
                             <AuthenticatedRoute path="/eventplanner" component={EventPlannerComponent} />
                             <AuthenticatedRoute path="/calendar" component={CalendarComponent} />
                             <AuthenticatedRoute path="/marketplace" component={MarketPlaceComponent} />
-                            <AuthenticatedRoute path="/additempanel" component={AddMarketPlaceItemPanel} />
-                            <AuthenticatedRoute path="/buyitempanel" component={PurchaseMarketPlaceItemComponent} />
+                            <AuthenticatedRoute path="/additempanel/" component={AddMarketPlaceItemPanel} />
+                            <AuthenticatedRoute path="/buyitempanel/:id" component={PurchaseMarketPlaceItemComponent} />
                             <AuthenticatedRoute path="/logout" component={LogoutComponent} />
 
                             <Route component={ErrorComponent} />
