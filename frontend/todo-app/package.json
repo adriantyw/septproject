@@ -5,9 +5,7 @@
   "dependencies": {
     "axios": "^0.18.1",
     "date-fns": "^2.0.1",
-    "daypilot-pro-react": "https://npm.daypilot.org/daypilot-pro-react/trial/2018.2.3297.tar.gz",
     "formik": "^1.5.1",
-    "jqwidgets-framework": "^8.1.4",
     "material-ui": "^0.20.2",
     "mdbreact": "^4.19.0",
     "moment": "^2.24.0",
@@ -16,7 +14,8 @@
     "react-dom": "^16.8.4",
     "react-icons": "^3.7.0",
     "react-router-dom": "^4.3.1",
-    "react-scripts": "2.1.8"
+    "react-scripts": "2.1.8",
+    "reactjs-popup": "^1.5.0"
   },
   "scripts": {
     "start": "set PORT=4200 && react-scripts start",
