@@ -23,12 +23,13 @@ class CalendarComponent extends Component
             showMonthPopup: false,
             showYearPopup: false,
             eventDay: null,
-            name: '',
-            targetDate: moment(new Date()).format('YYYY-MM-DD'),
+            title: '',
+            date: moment(new Date()).format('YYYY-MM-DD'),
             events: []
         }
 
         this.onSubmit = this.onSubmit.bind(this)
+        this.select = this.select.bind(this)
     }
 
     componentWillUnmount()
@@ -47,11 +48,11 @@ class CalendarComponent extends Component
     componentDidMount()
     {
         console.log('componentDidMount')
-        this.refreshTodos();
+        this.refreshEvents();
         console.log(this.state)
     }
 
-    refreshTodos()
+    refreshEvents()
     {
         let username = AuthenticationService.getLoggedInUserName()
         EventDataService.retrieveAllEvents(username)
@@ -130,9 +131,10 @@ class CalendarComponent extends Component
 
     select(day)
     {
+        console.log(this.state.selectedDay.format('YYYY-MM-DD'));
         this.setState({
-            selectedMonth: day.date,
-            selectedDay: day.date.clone(),
+            selectedMonth: moment(this.state.selectedMonth).set("date", day),
+            selectedDay: moment(this.state.selectedDay).set("date", day),
         });
     }
 
@@ -277,14 +279,21 @@ class CalendarComponent extends Component
         let username = AuthenticationService.getLoggedInUserName()
 
         let event = {
-            name: values.name,
-            targetDate: values.targetDate
+            title: values.title,
+            date: values.date
         }
 
         EventDataService.createEvent(username, event)
             .then(() => this.props.history.push('/calendar/event'))
 
         console.log(values);
+    }
+
+    deleteEvent(id)
+    {
+        let username =  AuthenticationService.getLoggedInUserName();
+        EventDataService.deleteEvent(username, id);
+        this.refreshEvents();
     }
 
     render()
@@ -309,7 +318,7 @@ class CalendarComponent extends Component
         console.log("blanks: ", blanks);
         let selectedDay = this.state.selectedDay;
 
-        let { name, targetDate } = this.state
+        let { title, date } = this.state
         let daysInMonth = [];
         let eventDay = moment();
         for (let d = 1; d <= this.daysInMonth(); d++)
@@ -321,17 +330,16 @@ class CalendarComponent extends Component
             let className = (d == this.currentDay() ? "day current-day" : "day");
             let showEvents = (d == eventDay ? " selected-day " : "")
             daysInMonth.push(
-                <td key={d} className={className + showEvents} >
+                <td key={d} className={className + showEvents} onClick={(e) => { this.select(d)}}>
                     <Popup
-                        trigger={<span onClick={(e) => { this.select(d) }}>{d}</span>
-                        }
+                        trigger={<span>{d}</span>}
                         modal
                         closeOnDocumentClick
                     >
                         <span>
                             <div className="container">
                                 <Formik
-                                    initialValues={{ name, targetDate }}
+                                    initialValues={{ title, date }}
                                     onSubmit={this.onSubmit}
                                     validateOnChange={false}
                                     validateOnBlur={false}
@@ -339,18 +347,18 @@ class CalendarComponent extends Component
                                 >
                                     {
                                         (props) => (
-                                            <Form>
+                                            <Form /*onSubmit={this.function to push to backend}*/>
                                                 <ErrorMessage name="description" component="div"
                                                     className="alert alert-warning" />
-                                                <ErrorMessage name="targetDate" component="div"
+                                                <ErrorMessage name="date" component="div"
                                                     className="alert alert-warning" />
                                                 <fieldset className="form-group">
                                                     <label>{this.renderDayLabel()}</label>
-                                                    <Field className="form-control" type="text" name="name" />
+                                                    <Field className="form-control" type="text" name="title" />
                                                 </fieldset>
                                                 <fieldset className="form-group">
                                                     <label>Target Date</label>
-                                                    <Field className="form-control" type="date" name="targetDate" />
+                                                    <Field className="form-control" type="date" value={this.state.selectedDay.format('YYYY-MM-DD')} name="date" />
                                                 </fieldset>
                                                 <button className="btn btn-success" type="submit">Create Event</button>
                                             </Form>
@@ -450,8 +458,8 @@ class CalendarComponent extends Component
                                             <td>{events.username}</td>
                                             <td>{events.title}</td>
                                             <td>{moment(events.date).format('YYYY-MM-DD')}</td>
-                                            <td><button className="btn btn-success" onClick={() => this.updateTodoClicked(events.id)}>Update</button></td>
-                                            <td><button className="btn btn-warning" onClick={() => this.deleteTodoClicked(events.id)}>Delete</button></td>
+                                            <td><button className="btn btn-success" /*onClick={() => this.updateTodoClicked(events.id)}*/>Update</button></td>
+                                            <td><button className="btn btn-warning" onClick={() => this.deleteEvent(events.id)}>Delete</button></td>
                                         </tr>
                                 )
                             }
