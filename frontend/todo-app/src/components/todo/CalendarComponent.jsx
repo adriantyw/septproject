@@ -65,7 +65,6 @@ class CalendarComponent extends Component
             )
     }
 
-
     weekdays = moment.weekdays();
     weekdaysShort = moment.weekdaysShort();
     months = moment.months();
@@ -285,13 +284,18 @@ class CalendarComponent extends Component
 
         EventDataService.createEvent(username, event)
             .then(() => this.props.history.push('/calendar/event'))
+        this.refreshEvents()
+    }
 
-        console.log(values);
+    updateEvent(id)
+    {
+        EventDataService.updateEvent(username, id, event)
+            .then(() => this.props.history.push('/calendar/event'))
     }
 
     deleteEvent(id)
     {
-        let username =  AuthenticationService.getLoggedInUserName();
+        let username = AuthenticationService.getLoggedInUserName();
         EventDataService.deleteEvent(username, id);
         this.refreshEvents();
     }
@@ -330,7 +334,7 @@ class CalendarComponent extends Component
             let className = (d == this.currentDay() ? "day current-day" : "day");
             let showEvents = (d == eventDay ? " selected-day " : "")
             daysInMonth.push(
-                <td key={d} className={className + showEvents} onClick={(e) => { this.select(d)}}>
+                <td key={d} className={className + showEvents} onClick={(e) => { this.select(d) }}>
                     <Popup
                         trigger={<span>{d}</span>}
                         modal
@@ -340,7 +344,7 @@ class CalendarComponent extends Component
                             <div className="container">
                                 <Formik
                                     initialValues={{ title, date }}
-                                    onSubmit={this.onSubmit}
+                                    onSubmit={this.onSubmit, this.refreshEvents}
                                     validateOnChange={false}
                                     validateOnBlur={false}
                                     enableReinitialize={true}
@@ -458,7 +462,7 @@ class CalendarComponent extends Component
                                             <td>{events.username}</td>
                                             <td>{events.title}</td>
                                             <td>{moment(events.date).format('YYYY-MM-DD')}</td>
-                                            <td><button className="btn btn-success" /*onClick={() => this.updateTodoClicked(events.id)}*/>Update</button></td>
+                                            <td><button className="btn btn-success" onClick={() => this.updateEvent(events.id)}>Update</button></td>
                                             <td><button className="btn btn-warning" onClick={() => this.deleteEvent(events.id)}>Delete</button></td>
                                         </tr>
                                 )
