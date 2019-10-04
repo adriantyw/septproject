@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import './style.css';
 import ItemDataService from '../../api/todo/ItemDataService.js';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
@@ -34,11 +33,13 @@ class AddMarketPlaceItemPanel extends React.Component {
         ItemDataService.createItem(username, marketItem)
         .then(() => this.props.history.push('/marketplace'))
     }
-
-    backToMarketplace()
+    
+    pushToMarket()
     {
-        this.props.history.push('/marketplace')
+       this.props.history.push('/marketplace');
     }
+
+    
     render() {
         let { itemName, price } = this.state
 
@@ -49,7 +50,7 @@ class AddMarketPlaceItemPanel extends React.Component {
                         <Formik
                                     initialValues={{ itemName, price }}
                                     onSubmit={this.submitForm}
-                                    onReset={this.backToMarketplace}
+                                    onReset={this.pushToMarket}
                                     validateOnChange={false}
                                     validateOnBlur={false}
                                     enableReinitialize={true}

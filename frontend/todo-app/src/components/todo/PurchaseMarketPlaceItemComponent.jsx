@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom'
 import './style.css'
 import ItemDataService from '../../api/todo/ItemDataService.js'
 import AuthenticationService from './AuthenticationService.js';
@@ -35,12 +34,12 @@ class PurchaseMarketPlaceItemComponent extends React.Component {
     }
     
     submitForm() {
-        console.log("submitform")
+        console.log("submitform");
         let username =  AuthenticationService.getLoggedInUserName();
         ItemDataService.deleteItem(username, this.state.id).then(response=>
         {
                 this.props.history.push(`/marketplace`);
-        })
+        });
 
     }
 
