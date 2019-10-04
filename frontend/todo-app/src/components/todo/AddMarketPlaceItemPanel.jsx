@@ -11,13 +11,12 @@ class AddMarketPlaceItemPanel extends React.Component {
         super(props)
 
         this.state = {
-            id: this.props.match.params.id,
             itemName: '',
             price: 0
         }
 
         this.submitForm = this.submitForm.bind(this)
-        this.backToMarketplace = this.backToMarketplace.bind(this)
+        this.pushToMarket = this.pushToMarket.bind(this)
     }
 
     submitForm(values) 
@@ -33,7 +32,7 @@ class AddMarketPlaceItemPanel extends React.Component {
         ItemDataService.createItem(username, marketItem)
         .then(() => this.props.history.push('/marketplace'))
     }
-    
+
     pushToMarket()
     {
        this.props.history.push('/marketplace');
