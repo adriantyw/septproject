@@ -34,12 +34,12 @@ class PurchaseMarketPlaceItemComponent extends React.Component {
     }
     
     submitForm() {
-        console.log("submitform")
+        console.log("submitform");
         let username =  AuthenticationService.getLoggedInUserName();
         ItemDataService.deleteItem(username, this.state.id).then(response=>
         {
                 this.props.history.push(`/marketplace`);
-        })
+        });
 
     }
 

@@ -1,13 +1,44 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import './style.css';
+import ItemDataService from '../../api/todo/ItemDataService.js';
+import AuthenticationService from './AuthenticationService.js';
 
 class AddMarketPlaceItemPanel extends React.Component {
 
-    submitForm() {
+    constructor(props)
+    {
+        super(props)
 
+        this.state = {
+            id: this.props.match.params.id,
+            username: AuthenticationService.getLoggedInUserName(),
+        }
+
+        this.submitForm = this.submitForm.bind(this)
+        this.pushToMarket = this.pushToMarket.bind(this)
+    }
+
+    submitForm(values) 
+    {
+        console.log("submitform");
+
+        let newItem = {
+            id: this.state.id,
+            itemName: "Hello",//values.itemName,
+            username: this.state.username,
+            price: 200//values.price
+        }
         
+        ItemDataService.createItem(this.state.username, newItem).then(response=>
+            {
+                    console.log("response.data");
+                    this.props.history.push(`/marketplace`);
+        });
+    }
 
+    pushToMarket()
+    {
+       this.props.history.push(`/marketplace`);
     }
 
     render() {
@@ -21,16 +52,13 @@ class AddMarketPlaceItemPanel extends React.Component {
                                 <input type="text" name="itemName"/>
                             </label></div>
                             <div><label>
-                                Username:
-                                <input type="text" name="username"/>
-                            </label></div>
-                            <div><label>
                                 Item Price:
                                 <input type="integer" name="itemPrice"/>
                             </label></div>
-                            {/*<div><input type="submit" value="Submit" onclick={this.submitForm()}/></div>*/}
-                            <Link className="nav-link" to="/"><button className="btn btn-dark" onclick={this.submitForm()} value="Submit">Add</button></Link>
-                            <Link className="nav-link" to="/marketplace"><button className="btn btn-dark" value="Cancel">Cancel</button></Link>
+                            <div className="control-buttons">
+                                <button className="btn btn-dark" onClick={(event) => this.submitForm()} value="Submit">Add</button>
+                                <button className="btn btn-dark" onClick={()=>this.pushToMarket()} value="Cancel">Cancel</button>
+                            </div>
                         </form>
                 </div>
             </div>
