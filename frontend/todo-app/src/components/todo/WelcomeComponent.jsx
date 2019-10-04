@@ -23,7 +23,7 @@ class WelcomeComponent extends Component
                 <h1>Welcome!</h1>
                 <div className="container">
                     Welcome {this.props.match.params.name}.
-                    You can manage your todos <Link to="/calendar">here</Link>.
+                    You can manage your todos <Link to="/todos/:id">here</Link>.
                 </div>
                 <div className="container">
                     <button onClick={this.retrieveWelcomeMessage}

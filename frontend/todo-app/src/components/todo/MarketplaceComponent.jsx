@@ -11,6 +11,7 @@ class MarketplaceComponent extends Component
       {
             items: []
       }
+      this.onSubmit = this.onSubmit.bind(this)
    }
 
    componentDidMount()
@@ -31,6 +32,13 @@ class MarketplaceComponent extends Component
             }
          )
    }
+
+   onSubmit(id)
+   {
+      this.props.history.push(`buyitempanel/${id}`);
+   }
+   
+   
 
    render()
    {
@@ -55,7 +63,7 @@ class MarketplaceComponent extends Component
                                  <td>{item.itemName}</td>
                                  <td>{item.username}</td>
                                  <td>{item.price}</td>
-                                 <td><Link to="/buyitempanel"><button className="btn btn-dark" /*onClick={() => this.updateitemClicked(item.id)}*/>Buy</button></Link></td>
+                                 <td><button className="btn btn-dark" onClick={() => this.onSubmit(item.id)}>Buy</button></td>
                               </tr>
                         )
                      }

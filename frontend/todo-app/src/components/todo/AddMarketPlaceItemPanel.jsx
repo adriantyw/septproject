@@ -1,37 +1,81 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import './style.css';
+import ItemDataService from '../../api/todo/ItemDataService.js';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import AuthenticationService from './AuthenticationService.js'
 
 class AddMarketPlaceItemPanel extends React.Component {
+  
+    constructor(props)
+    {
+        super(props)
 
-    submitForm() {
+        this.state = {
+            itemName: '',
+            price: 0
+        }
 
-        
-
+        this.submitForm = this.submitForm.bind(this)
+        this.pushToMarket = this.pushToMarket.bind(this)
     }
 
+    submitForm(values) 
+    {
+        let username = AuthenticationService.getLoggedInUserName();
+
+        let marketItem = 
+        {
+            itemName: values.itemName,
+            price: values.price,
+        }
+
+        ItemDataService.createItem(username, marketItem)
+        .then(() => this.props.history.push('/marketplace'))
+    }
+
+    pushToMarket()
+    {
+       this.props.history.push('/marketplace');
+    }
+
+    
     render() {
+        let { itemName, price } = this.state
+
         return (
             <div class="page-header">
                 <h2>Add Marketplace Item</h2>
                     <div className="container">
-                        <form>
-                            <div><label>
-                                Item Name:
-                                <input type="text" name="itemName"/>
-                            </label></div>
-                            <div><label>
-                                Username:
-                                <input type="text" name="username"/>
-                            </label></div>
-                            <div><label>
-                                Item Price:
-                                <input type="integer" name="itemPrice"/>
-                            </label></div>
-                            {/*<div><input type="submit" value="Submit" onclick={this.submitForm()}/></div>*/}
-                            <Link className="nav-link" to="/"><button className="btn btn-dark" onclick={this.submitForm()} value="Submit">Add</button></Link>
-                            <Link className="nav-link" to="/marketplace"><button className="btn btn-dark" value="Cancel">Cancel</button></Link>
-                        </form>
+                        <Formik
+                                    initialValues={{ itemName, price }}
+                                    onSubmit={this.submitForm}
+                                    onReset={this.pushToMarket}
+                                    validateOnChange={false}
+                                    validateOnBlur={false}
+                                    enableReinitialize={true}
+                        >
+                            {
+                                (props) => (
+                                    <Form>
+                                        <div>
+                                            <fieldset className="form-group">
+                                                <label>Item Name:</label>
+                                                <Field className="form-control" type="text" name="itemName" />
+                                            </fieldset>
+                                        </div>
+
+                                        <div>
+                                            <fieldset className="form-group">
+                                                <label>Item Price:</label>
+                                                <Field className="form-control" type="number" step="0.01" name="price" />
+                                            </fieldset>
+                                        </div>
+                                        <button className="btn btn-dark" type="Submit">Add</button>
+                                        <button className="btn btn-dark" type="Reset">Cancel</button>
+                                    </Form>
+                                )
+                            }
+                        </Formik>
                 </div>
             </div>
         );
