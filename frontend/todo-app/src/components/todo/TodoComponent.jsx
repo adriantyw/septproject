@@ -72,6 +72,7 @@ class TodoComponent extends Component
         {
             TodoDataService.createTodo(username, todo)
                 .then(() => this.props.history.push('/todos'))
+
         } else
         {
             TodoDataService.updateTodo(username, this.state.id, todo)

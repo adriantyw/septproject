@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { MDBContainer } from 'mdbreact'
 import moment from 'moment'
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { MDBContainer, MDBRow, MDBCol, MDBInput, MDBBtn } from 'mdbreact';
 import EventDataService from '../../api/todo/EventDataService.js'
 import AuthenticationService from './AuthenticationService.js'
 import Popup from "reactjs-popup";
@@ -8,20 +9,27 @@ import './calendar.css';
 
 class CalendarComponent extends Component
 {
-    state = {
-        dateContext: moment(),
-        today: moment(),
-        showMonthPopup: false,
-        showYearPopup: false,
-        eventDay: null,
-        hasEvents: false,
-        events: []
-    }
 
 
     constructor(props)
     {
         super(props);
+
+        this.state = {
+            selectedMonth: moment(),
+            selectedDay: moment().startOf("day"),
+            dateContext: moment(),
+            today: moment(),
+            showMonthPopup: false,
+            showYearPopup: false,
+            eventDay: null,
+            title: '',
+            date: moment(new Date()).format('YYYY-MM-DD'),
+            events: []
+        }
+
+        this.onSubmit = this.onSubmit.bind(this)
+        this.select = this.select.bind(this)
     }
 
     componentWillUnmount()
@@ -40,11 +48,11 @@ class CalendarComponent extends Component
     componentDidMount()
     {
         console.log('componentDidMount')
-        this.refreshTodos();
+        this.refreshEvents();
         console.log(this.state)
     }
 
-    refreshTodos()
+    refreshEvents()
     {
         let username = AuthenticationService.getLoggedInUserName()
         EventDataService.retrieveAllEvents(username)
@@ -56,7 +64,6 @@ class CalendarComponent extends Component
                 }
             )
     }
-
 
     weekdays = moment.weekdays();
     weekdaysShort = moment.weekdaysShort();
@@ -119,6 +126,25 @@ class CalendarComponent extends Component
             dateContext: dateContext
         });
         this.props.onPrevMonth && this.props.onPrevMonth();
+    }
+
+    select(day)
+    {
+        console.log(this.state.selectedDay.format('YYYY-MM-DD'));
+        this.setState({
+            selectedMonth: moment(this.state.selectedMonth).set("date", day),
+            selectedDay: moment(this.state.selectedDay).set("date", day),
+        });
+    }
+
+    renderDayLabel()
+    {
+        const currentSelectedDay = this.state.selectedDay;
+        return (
+            <span className="box month-label">
+                {currentSelectedDay.format("DD MMMM YYYY")}
+            </span>
+        );
     }
 
     onSelectChange = (e, data) =>
@@ -232,6 +258,48 @@ class CalendarComponent extends Component
         this.props.showEvents && this.props.showEvents(e, day);
     }
 
+
+    // sends event data to backend
+    addEvent = (e, day) =>
+    {
+        this.setState({
+            eventDay: day
+        }, () =>
+        {
+            console.log("EVENTS DAY: ", this.state.eventDay);
+        });
+
+        this.props.showEvents && this.props.showEvents(e, day);
+    }
+
+
+    onSubmit(values)
+    {
+        let username = AuthenticationService.getLoggedInUserName()
+
+        let event = {
+            title: values.title,
+            date: values.date
+        }
+
+        EventDataService.createEvent(username, event)
+            .then(() => this.props.history.push('/calendar/event'))
+        this.refreshEvents()
+    }
+
+    updateEvent(id)
+    {
+        EventDataService.updateEvent(username, id, event)
+            .then(() => this.props.history.push('/calendar/event'))
+    }
+
+    deleteEvent(id)
+    {
+        let username = AuthenticationService.getLoggedInUserName();
+        EventDataService.deleteEvent(username, id);
+        this.refreshEvents();
+    }
+
     render()
     {
         // Map the weekdays i.e Sun, Mon, Tue etc as <td>
@@ -252,7 +320,9 @@ class CalendarComponent extends Component
         }
 
         console.log("blanks: ", blanks);
+        let selectedDay = this.state.selectedDay;
 
+        let { title, date } = this.state
         let daysInMonth = [];
         let eventDay = moment();
         for (let d = 1; d <= this.daysInMonth(); d++)
@@ -264,14 +334,44 @@ class CalendarComponent extends Component
             let className = (d == this.currentDay() ? "day current-day" : "day");
             let showEvents = (d == eventDay ? " selected-day " : "")
             daysInMonth.push(
-                <td key={d} className={className + showEvents} >
+                <td key={d} className={className + showEvents} onClick={(e) => { this.select(d) }}>
                     <Popup
-                        trigger={<span onClick={(e) => { this.showEvents(e, d) }}>{d}</span>
-                        }
+                        trigger={<span>{d}</span>}
                         modal
                         closeOnDocumentClick
                     >
-                        <span> Create Event </span>
+                        <span>
+                            <div className="container">
+                                <Formik
+                                    initialValues={{ title, date }}
+                                    onSubmit={this.onSubmit, this.refreshEvents}
+                                    validateOnChange={false}
+                                    validateOnBlur={false}
+                                    enableReinitialize={true}
+                                >
+                                    {
+                                        (props) => (
+                                            <Form /*onSubmit={this.function to push to backend}*/>
+                                                <ErrorMessage name="description" component="div"
+                                                    className="alert alert-warning" />
+                                                <ErrorMessage name="date" component="div"
+                                                    className="alert alert-warning" />
+                                                <fieldset className="form-group">
+                                                    <label>{this.renderDayLabel()}</label>
+                                                    <Field className="form-control" type="text" name="title" />
+                                                </fieldset>
+                                                <fieldset className="form-group">
+                                                    <label>Target Date</label>
+                                                    <Field className="form-control" type="date" value={this.state.selectedDay.format('YYYY-MM-DD')} name="date" />
+                                                </fieldset>
+                                                <button className="btn btn-success" type="submit">Create Event</button>
+                                            </Form>
+                                        )
+                                    }
+                                </Formik>
+
+                            </div>
+                        </span>
                     </Popup>
                 </td>
             );
@@ -362,8 +462,8 @@ class CalendarComponent extends Component
                                             <td>{events.username}</td>
                                             <td>{events.title}</td>
                                             <td>{moment(events.date).format('YYYY-MM-DD')}</td>
-                                            <td><button className="btn btn-success" onClick={() => this.updateTodoClicked(events.id)}>Update</button></td>
-                                            <td><button className="btn btn-warning" onClick={() => this.deleteTodoClicked(events.id)}>Delete</button></td>
+                                            <td><button className="btn btn-success" onClick={() => this.updateEvent(events.id)}>Update</button></td>
+                                            <td><button className="btn btn-warning" onClick={() => this.deleteEvent(events.id)}>Delete</button></td>
                                         </tr>
                                 )
                             }
