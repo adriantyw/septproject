@@ -22,8 +22,8 @@ class WelcomeComponent extends Component
             <>
                 <h1>Welcome!</h1>
                 <div className="container">
-                    {/* Welcome {this.props.match.params.name}. */}
-                    You can manage your todos <Link to="/calendar">here</Link>.
+                    Welcome {this.props.match.params.name}.
+                    You can look at your calendar <Link to="/calendar">here</Link>.
                 </div>
                 <div className="container">
                     <button onClick={this.retrieveWelcomeMessage}
