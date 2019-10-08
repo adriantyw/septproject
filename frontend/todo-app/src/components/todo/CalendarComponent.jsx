@@ -283,15 +283,17 @@ class CalendarComponent extends Component
         }
 
         EventDataService.createEvent(username, event)
-            .then(() => this.props.history.push('/calendar/event'))
-        this.refreshEvents()
+            .then(() => {
+                this.props.history.push('/calendar/event')
+                this.refreshEvents()
+            });
     }
 
-    updateEvent(id)
-    {
-        EventDataService.updateEvent(username, id, event)
-            .then(() => this.props.history.push('/calendar/event'))
-    }
+    // updateEvent(id)
+    // {
+    //     EventDataService.updateEvent(username, id, event)
+    //         .then(() => this.props.history.push('/calendar/event'))
+    // }
 
     deleteEvent(id)
     {
@@ -339,12 +341,13 @@ class CalendarComponent extends Component
                         trigger={<span>{d}</span>}
                         modal
                         closeOnDocumentClick
+                        
                     >
                         <span>
                             <div className="container">
                                 <Formik
                                     initialValues={{ title, date }}
-                                    onSubmit={this.onSubmit, this.refreshEvents}
+                                    onSubmit={this.onSubmit}
                                     validateOnChange={false}
                                     validateOnBlur={false}
                                     enableReinitialize={true}
@@ -462,7 +465,7 @@ class CalendarComponent extends Component
                                             <td>{events.username}</td>
                                             <td>{events.title}</td>
                                             <td>{moment(events.date).format('YYYY-MM-DD')}</td>
-                                            <td><button className="btn btn-success" onClick={() => this.updateEvent(events.id)}>Update</button></td>
+                                            <td><button className="btn btn-success" /*onClick={() => this.updateEvent(events.id)}*/>Update</button></td>
                                             <td><button className="btn btn-warning" onClick={() => this.deleteEvent(events.id)}>Delete</button></td>
                                         </tr>
                                 )
