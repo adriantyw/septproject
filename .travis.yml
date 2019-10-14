@@ -11,10 +11,6 @@ matrix:
         - mvn clean install
         - mvn test
         - mvn appengine:deploy app.yaml
-      deploy:
-        provider: gae
-        keyfile: client-secret.json
-        project: oceanic-trees-254104
 
     - language: node_js
       node_js:
@@ -28,10 +24,7 @@ matrix:
         - gcloud config set project oceanic-trees-254104
         - cd frontend/todo-app
         - npm install
-        - gcloud -q app deploy appengine/app.yaml
+        - npm run build
+        - gcloud -q app deploy app.yaml
       skip_files:
         - ^node_modules/.*$ 
-      deploy:
-        provider: gae
-        keyfile: client-secret.json
-        project: oceanic-trees-254104
