@@ -25,7 +25,7 @@ import com.sept.rest.webservices.restfulwebservices.jwt.JwtTokenUtil;
 import com.sept.rest.webservices.restfulwebservices.jwt.JwtUserDetails;
 
 @RestController
-@CrossOrigin(origins="http://localhost:4200")
+@CrossOrigin(origins="https://oceanic-trees-254104.appspot.com")
 public class JwtAuthenticationRestController {
 
   @Value("${jwt.http.request.header}")
@@ -59,7 +59,7 @@ public class JwtAuthenticationRestController {
     final String token = authToken.substring(7);
     String username = jwtTokenUtil.getUsernameFromToken(token);
     JwtUserDetails user = (JwtUserDetails) jwtInMemoryUserDetailsService.loadUserByUsername(username);
-
+    
     if (jwtTokenUtil.canTokenBeRefreshed(token)) {
       String refreshedToken = jwtTokenUtil.refreshToken(token);
       return ResponseEntity.ok(new JwtTokenResponse(refreshedToken));
