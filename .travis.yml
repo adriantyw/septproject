@@ -25,6 +25,6 @@ matrix:
         - cd frontend/todo-app
         - npm clean-install
         - CI=false npm run build
-        - if [ TRAVIS_BRANCH = "deploy" ]; gcloud -q app deploy; fi
+        - if [  $TRAVIS_BRANCH = "deploy" ]; gcloud -q app deploy; fi
       skip_files:
         - ^node_modules/.*$ 
