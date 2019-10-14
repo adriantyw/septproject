@@ -10,7 +10,7 @@ matrix:
         - cd restful-web-services
         - mvn clean install
         - mvn test
-        - mvn appengine:deploy app.yaml
+        - mvn appengine:deploy
 
     - language: node_js
       node_js:
@@ -23,8 +23,8 @@ matrix:
       script:
         - gcloud config set project oceanic-trees-254104
         - cd frontend/todo-app
-        - npm install
+        - npm clean install
         - npm run build
-        - gcloud -q app deploy app.yaml
+        - gcloud -q app deploy
       skip_files:
         - ^node_modules/.*$ 
