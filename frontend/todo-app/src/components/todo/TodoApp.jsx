@@ -10,11 +10,10 @@ import LogoutComponent from './LogoutComponent.jsx'
 import WelcomeComponent from './WelcomeComponent.jsx'
 import TodoComponent from './TodoComponent.jsx'
 import RegisterComponent from './RegisterComponent.jsx'
-import CalendarComponent from './CalendarComponent.jsx';
+import CalendarComponent from './CalendarComponent.jsx'
 import MarketPlaceComponent from './MarketplaceComponent.jsx'
 import AddMarketPlaceItemPanel from './AddMarketPlaceItemPanel.jsx'
-
-// huidiwawad
+import PurchaseMarketPlaceItemComponent from './PurchaseMarketPlaceItemComponent.jsx'
 
 class TodoApp extends Component
 {
@@ -34,7 +33,8 @@ class TodoApp extends Component
                             <AuthenticatedRoute path="/eventplanner" component={EventPlannerComponent} />
                             <AuthenticatedRoute path="/calendar" component={CalendarComponent} />
                             <AuthenticatedRoute path="/marketplace" component={MarketPlaceComponent} />
-                            <AuthenticatedRoute path="/additempanel" component={AddMarketPlaceItemPanel} />
+                            <AuthenticatedRoute path="/additempanel/" component={AddMarketPlaceItemPanel} />
+                            <AuthenticatedRoute path="/buyitempanel/:id" component={PurchaseMarketPlaceItemComponent} />
                             <AuthenticatedRoute path="/logout" component={LogoutComponent} />
 
                             <Route component={ErrorComponent} />
@@ -42,8 +42,6 @@ class TodoApp extends Component
                         <FooterComponent />
                     </>
                 </Router>
-                {/*<LoginComponent/>
-                <WelcomeComponent/>*/}
             </div>
         )
     }

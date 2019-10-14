@@ -1,0 +1,479 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for src/components/todo/LoginComponent.jsx</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../prettify.css" />
+    <link rel="stylesheet" href="../../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../../index.html">All files</a> / <a href="index.html">src/components/todo</a> LoginComponent.jsx
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">45.45% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>5/11</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">50% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>2/4</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">33.33% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>2/6</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">45.45% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>5/11</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { Component } from "react";
+import { MDBContainer, MDBRow, MDBCol, MDBInput, MDBBtn } from 'mdbreact';
+import AuthenticationService from "./AuthenticationService.js";
+import { Link } from 'react-router-dom'
+&nbsp;
+class LoginComponent extends Component
+{
+  constructor(props)
+  {
+    super(props);
+&nbsp;
+    this.state = {
+      username: "sept",
+      password: "dummy",
+      hasLoginFailed: false,
+      showSuccessMessage: false
+    };
+    // this.handleUsernameChange = this.handleUsernameChange.bind(this)
+    // this.handlePasswordChange = this.handlePasswordChange.bind(this)
+    this.handleChange = this.handleChange.bind(this);
+    this.loginClicked = this.loginClicked.bind(this);
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  ha</span>ndleChange(event)
+  {
+    //console.log(this.state);
+<span class="cstat-no" title="statement not covered" >    this.setState({</span>
+      [event.target.name]: event.target.value
+    });
+  }
+&nbsp;
+  // handleUsernameChange(event) {
+  //     console.log(event.target.name);
+  //     this.setState(
+  //         {
+  //             [event.target.name]
+  //               :event.target.value
+  //         }
+  //     )
+  // }
+&nbsp;
+  // handlePasswordChange(event) {
+  //     console.log(event.target.value);
+  //     this.setState({password:event.target.value})
+  // }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  lo</span>ginClicked()
+  {
+    //sept,dummy
+    // if(this.state.username==='sept' &amp;&amp; this.state.password==='dummy'){
+    //     AuthenticationService.registerSuccessfulLogin(this.state.username,this.state.password)
+    //     this.props.history.push(`/welcome/${this.state.username}`)
+    //     //this.setState({showSuccessMessage:true})
+    //     //this.setState({hasLoginFailed:false})
+    // }
+    // else {
+    //     this.setState({showSuccessMessage:false})
+    //     this.setState({hasLoginFailed:true})
+    // }
+&nbsp;
+    // AuthenticationService
+    // .executeBasicAuthenticationService(this.state.username, this.state.password)
+    // .then(() =&gt; {
+    //     AuthenticationService.registerSuccessfulLogin(this.state.username,this.state.password)
+    //     this.props.history.push(`/welcome/${this.state.username}`)
+    // }).catch( () =&gt;{
+    //     this.setState({showSuccessMessage:false})
+    //     this.setState({hasLoginFailed:true})
+    // })
+<span class="cstat-no" title="statement not covered" >    AuthenticationService.executeJwtAuthenticationService(</span>
+      this.state.username,
+      this.state.password
+    )
+      .then(<span class="fstat-no" title="function not covered" >re</span>sponse =&gt;
+      {
+<span class="cstat-no" title="statement not covered" >        AuthenticationService.registerSuccessfulLoginForJwt(</span>
+          this.state.username,
+          response.data.token
+        );
+<span class="cstat-no" title="statement not covered" >        this.props.history.push(`/welcome/${this.state.username}`);</span>
+      })
+      .catch(<span class="fstat-no" title="function not covered" >()</span> =&gt;
+      {
+<span class="cstat-no" title="statement not covered" >        this.setState({ showSuccessMessage: false });</span>
+<span class="cstat-no" title="statement not covered" >        this.setState({ hasLoginFailed: true });</span>
+      });
+  }
+&nbsp;
+  render()
+  {
+    return (
+      &lt;MDBContainer&gt;
+        &lt;h1&gt;Login&lt;/h1&gt;
+        &lt;MDBRow&gt;
+          &lt;MDBCol md="7"&gt;
+            &lt;form&gt;
+              {/*&lt;ShowInvalidCredentials hasLoginFailed={this.state.hasLoginFailed}/&gt;*/}
+              {this.state.hasLoginFailed &amp;&amp; (
+<span class="branch-1 cbranch-no" title="branch not covered" >                &lt;div className="alert alert-warning"&gt;</span>
+                  Invalid Username or Password
+            &lt;/div&gt;
+              )}
+              {this.state.showSuccessMessage &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >&lt;div&gt;Login Sucessful&lt;/div&gt;}</span>
+              {/*&lt;ShowLoginSuccessMessage showSuccessMessage={this.state.showSuccessMessage}/&gt;*/}
+              User Name:{" "}
+              &lt;div className="grey-text"&gt;
+                &lt;MDBInput
+                  type="text"
+                  name="username"
+                  value={this.state.username}
+                  onChange={this.handleChange}
+                /&gt;
+                Password:{" "}
+                &lt;MDBInput
+                  icon="lock"
+                  type="password"
+                  name="password"
+                  value={this.state.password}
+                  onChange={this.handleChange}
+                /&gt;
+              &lt;/div&gt;
+              &lt;div className="text-center"&gt;
+                &lt;MDBBtn onClick={this.loginClicked}&gt;
+                  Login
+          &lt;/MDBBtn&gt;
+                &lt;Link className="nav-link" to="/register"&gt;
+                  Register
+          &lt;/Link&gt;
+              &lt;/div&gt;
+            &lt;/form&gt;
+          &lt;/MDBCol&gt;
+        &lt;/MDBRow&gt;
+      &lt;/MDBContainer&gt;
+    );
+  }
+}
+&nbsp;
+export default LoginComponent;
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Wed Oct 02 2019 19:17:46 GMT+1000 (Australian Eastern Standard Time)
+</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>

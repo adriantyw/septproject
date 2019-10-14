@@ -11,6 +11,7 @@ class MarketplaceComponent extends Component
       {
             items: []
       }
+      this.onSubmit = this.onSubmit.bind(this)
    }
 
    componentDidMount()
@@ -32,10 +33,12 @@ class MarketplaceComponent extends Component
          )
    }
 
-   pageRedirect()
+   onSubmit(id)
    {
-      //window.location = '/AddMarketPlaceItemPanel'
+      this.props.history.push(`buyitempanel/${id}`);
    }
+   
+   
 
    render()
    {
@@ -60,7 +63,7 @@ class MarketplaceComponent extends Component
                                  <td>{item.itemName}</td>
                                  <td>{item.username}</td>
                                  <td>{item.price}</td>
-                                 <td><button className="btn btn-dark" onClick={() => this.updateitemClicked(item.id)}>Buy</button></td>
+                                 <td><button className="btn btn-dark" onClick={() => this.onSubmit(item.id)}>Buy</button></td>
                               </tr>
                         )
                      }
@@ -70,7 +73,6 @@ class MarketplaceComponent extends Component
                   <Link to="/additempanel">
                      <button className="btn btn-dark">Add Item</button>
                   </Link>
-                  <button className="btn btn-dark" onClick={this.pageRedirect()}>Add Item</button>
                </div>
             </div>
          </div>

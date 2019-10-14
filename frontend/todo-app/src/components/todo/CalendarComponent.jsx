@@ -1,26 +1,69 @@
 import React, { Component } from 'react';
-import { MDBContainer } from 'mdbreact'
 import moment from 'moment'
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { MDBContainer, MDBRow, MDBCol, MDBInput, MDBBtn } from 'mdbreact';
+import EventDataService from '../../api/todo/EventDataService.js'
+import AuthenticationService from './AuthenticationService.js'
+import Popup from "reactjs-popup";
 import './calendar.css';
 
 class CalendarComponent extends Component
 {
-    state = {
-        dateContext: moment(),
-        today: moment(),
-        showMonthPopup: false,
-        showYearPopup: false,
-        selectedDay: null
-    }
+
 
     constructor(props)
     {
         super(props);
-        this.width = props.width || "100%";
-        this.style = props.style || {};
-        this.style.width = this.width; // add this
+
+        this.state = {
+            selectedMonth: moment(),
+            selectedDay: moment().startOf("day"),
+            dateContext: moment(),
+            today: moment(),
+            showMonthPopup: false,
+            showYearPopup: false,
+            eventDay: null,
+            title: '',
+            date: moment(new Date()).format('YYYY-MM-DD'),
+            events: []
+        }
+
+        this.onSubmit = this.onSubmit.bind(this)
+        this.select = this.select.bind(this)
     }
 
+    componentWillUnmount()
+    {
+        console.log('componentWillUnmount')
+    }
+
+    shouldComponentUpdate(nextProps, nextState)
+    {
+        console.log('shouldComponentUpdate')
+        console.log(nextProps)
+        console.log(nextState)
+        return true
+    }
+
+    componentDidMount()
+    {
+        console.log('componentDidMount')
+        this.refreshEvents();
+        console.log(this.state)
+    }
+
+    refreshEvents()
+    {
+        let username = AuthenticationService.getLoggedInUserName()
+        EventDataService.retrieveAllEvents(username)
+            .then(
+                response =>
+                {
+                    //console.log(response);
+                    this.setState({ events: response.data })
+                }
+            )
+    }
 
     weekdays = moment.weekdays();
     weekdaysShort = moment.weekdaysShort();
@@ -83,6 +126,25 @@ class CalendarComponent extends Component
             dateContext: dateContext
         });
         this.props.onPrevMonth && this.props.onPrevMonth();
+    }
+
+    select(day)
+    {
+        console.log(this.state.selectedDay.format('YYYY-MM-DD'));
+        this.setState({
+            selectedMonth: moment(this.state.selectedMonth).set("date", day),
+            selectedDay: moment(this.state.selectedDay).set("date", day),
+        });
+    }
+
+    renderDayLabel()
+    {
+        const currentSelectedDay = this.state.selectedDay;
+        return (
+            <span className="box month-label">
+                {currentSelectedDay.format("DD MMMM YYYY")}
+            </span>
+        );
     }
 
     onSelectChange = (e, data) =>
@@ -184,16 +246,60 @@ class CalendarComponent extends Component
         );
     }
 
-    onDayClick = (e, day) =>
+    showEvents = (e, day) =>
     {
         this.setState({
-            selectedDay: day
+            eventDay: day
         }, () =>
-            {
-                console.log("SELECTED DAY: ", this.state.selectedDay);
-            });
+        {
+            console.log("EVENTS DAY: ", this.state.eventDay);
+        });
 
-        this.props.onDayClick && this.props.onDayClick(e, day);
+        this.props.showEvents && this.props.showEvents(e, day);
+    }
+
+
+    // sends event data to backend
+    addEvent = (e, day) =>
+    {
+        this.setState({
+            eventDay: day
+        }, () =>
+        {
+            console.log("EVENTS DAY: ", this.state.eventDay);
+        });
+
+        this.props.showEvents && this.props.showEvents(e, day);
+    }
+
+
+    onSubmit(values)
+    {
+        let username = AuthenticationService.getLoggedInUserName()
+
+        let event = {
+            title: values.title,
+            date: values.date
+        }
+
+        EventDataService.createEvent(username, event)
+            .then(() => {
+                this.props.history.push('/calendar/event')
+                this.refreshEvents()
+            });
+    }
+
+    // updateEvent(id)
+    // {
+    //     EventDataService.updateEvent(username, id, event)
+    //         .then(() => this.props.history.push('/calendar/event'))
+    // }
+
+    deleteEvent(id)
+    {
+        let username = AuthenticationService.getLoggedInUserName();
+        EventDataService.deleteEvent(username, id);
+        this.refreshEvents();
     }
 
     render()
@@ -216,15 +322,60 @@ class CalendarComponent extends Component
         }
 
         console.log("blanks: ", blanks);
+        let selectedDay = this.state.selectedDay;
 
+        let { title, date } = this.state
         let daysInMonth = [];
+        let eventDay = moment();
         for (let d = 1; d <= this.daysInMonth(); d++)
         {
+            this.state.events.map(
+                events =>
+                    eventDay = moment(events.date).format("DD")
+            )
             let className = (d == this.currentDay() ? "day current-day" : "day");
-            let selectedClass = (d == this.state.selectedDay ? " selected-day " : "")
+            let showEvents = (d == eventDay ? " selected-day " : "")
             daysInMonth.push(
-                <td key={d} className={className + selectedClass} >
-                    <span onClick={(e) => { this.onDayClick(e, d) }}>{d}</span>
+                <td key={d} className={className + showEvents} onClick={(e) => { this.select(d) }}>
+                    <Popup
+                        trigger={<span>{d}</span>}
+                        modal
+                        closeOnDocumentClick
+                        
+                    >
+                        <span>
+                            <div className="container">
+                                <Formik
+                                    initialValues={{ title, date }}
+                                    onSubmit={this.onSubmit}
+                                    validateOnChange={false}
+                                    validateOnBlur={false}
+                                    enableReinitialize={true}
+                                >
+                                    {
+                                        (props) => (
+                                            <Form /*onSubmit={this.function to push to backend}*/>
+                                                <ErrorMessage name="description" component="div"
+                                                    className="alert alert-warning" />
+                                                <ErrorMessage name="date" component="div"
+                                                    className="alert alert-warning" />
+                                                <fieldset className="form-group">
+                                                    <label>{this.renderDayLabel()}</label>
+                                                    <Field className="form-control" type="text" name="title" />
+                                                </fieldset>
+                                                <fieldset className="form-group">
+                                                    <label>Target Date</label>
+                                                    <Field className="form-control" type="date" value={this.state.selectedDay.format('YYYY-MM-DD')} name="date" />
+                                                </fieldset>
+                                                <button className="btn btn-success" type="submit">Create Event</button>
+                                            </Form>
+                                        )
+                                    }
+                                </Formik>
+
+                            </div>
+                        </span>
+                    </Popup>
                 </td>
             );
         }
@@ -265,9 +416,9 @@ class CalendarComponent extends Component
         })
 
         return (
-            <div className="calendar-container" style={this.style}>
-                <MDBContainer>
-                    <h1>Select An Event</h1>
+            <div>
+                <div className="calendar-container">
+                    <h1>Events</h1>
                     <table className="calendar">
                         <thead>
                             <tr className="calendar-header">
@@ -294,7 +445,34 @@ class CalendarComponent extends Component
                             {trElems}
                         </tbody>
                     </table>
-                </MDBContainer>
+                </div>
+                <div className="inlineblock">
+                    <table className="table">
+                        <thead>
+                            <tr>
+                                <th>User Name</th>
+                                <th>Title</th>
+                                <th>Date</th>
+                                <th>Update</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                this.state.events.map(
+                                    events =>
+                                        <tr key={events.id}>
+                                            <td>{events.username}</td>
+                                            <td>{events.title}</td>
+                                            <td>{moment(events.date).format('YYYY-MM-DD')}</td>
+                                            <td><button className="btn btn-success" /*onClick={() => this.updateEvent(events.id)}*/>Update</button></td>
+                                            <td><button className="btn btn-warning" onClick={() => this.deleteEvent(events.id)}>Delete</button></td>
+                                        </tr>
+                                )
+                            }
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
 

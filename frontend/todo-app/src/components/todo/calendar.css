@@ -9,6 +9,8 @@ tr {
 
 .calendar-container {
     border: 2px solid rgb(122, 24, 24);
+    display: inline-block;
+    width: 55%;
 }
 
 .calendar {
@@ -26,6 +28,7 @@ tr {
 .calendar-header td {
     border-spacing: 0;
     padding-left: 5px;
+    font-size: 1.6em;
 }
 
 .day,
@@ -36,11 +39,11 @@ tr {
 }
 
 .week-day {
-    font-size: 0.8em;
+    font-size: 1.2em;
 }
 
 .day {
-    font-size: 0.8em;
+    font-size: 1.2em;
 }
 
 .day {
@@ -59,12 +62,11 @@ tr {
     color: white;
 }
 .selected-day {
-    background-color:rgb(124, 69, 59);
     width: 28px;
     height: 28px;
     line-height: 28px;
     border-radius: 2%;
-    color: black;
+    color: rgb(255, 0, 0);
 }
 
 .month-popup {
@@ -96,4 +98,13 @@ tr {
 
 .label-month {
     cursor: pointer;
+}
+
+.div1 {
+    width: 50%
+}
+
+.inlineblock {
+    width: 30%;
+    display: inline-block;
 }
