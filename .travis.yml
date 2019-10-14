@@ -10,7 +10,7 @@ matrix:
         - cd restful-web-services
         - mvn clean install
         - mvn test
-        - if [ $TRAVIS_BRANCH = "deploy" ]; mvn appengine:deploy; fi
+        - if [ $TRAVIS_BRANCH = "deploy" ]; then mvn appengine:deploy; fi
 
     - language: node_js
       node_js:
@@ -25,6 +25,6 @@ matrix:
         - cd frontend/todo-app
         - npm clean-install
         - CI=false npm run build
-        - if [  $TRAVIS_BRANCH = "deploy" ]; gcloud -q app deploy; fi
+        - if [  $TRAVIS_BRANCH = "deploy" ]; then gcloud -q app deploy; fi
       skip_files:
         - ^node_modules/.*$ 
