@@ -3,10 +3,10 @@ matrix:
     - language: java
       sudo: false
       before_install:
-        - openssl aes-256-cbc -K $encrypted_261f0aee381c_key -iv $encrypted_261f0aee381c_iv -in credentials.tar.gz.enc -out credentials.tar.gz -d
-        - gcloud auth activate-service-account --key-file client-secret.json
+        - if [  $TRAVIS_BRANCH = "deploy" ]; then openssl aes-256-cbc -K $encrypted_261f0aee381c_key -iv $encrypted_261f0aee381c_iv -in credentials.tar.gz.enc -out credentials.tar.gz -d; fi
+        - if [  $TRAVIS_BRANCH = "deploy" ]; then gcloud auth activate-service-account --key-file client-secret.json; fi
       script:
-        - gcloud config set project oceanic-trees-254104
+        - if [  $TRAVIS_BRANCH = "deploy" ]; then gcloud config set project oceanic-trees-254104; fi
         - cd restful-web-services
         - mvn clean install
         - mvn test
@@ -17,11 +17,11 @@ matrix:
         - 12
       sudo: false
       before_install:
-        - openssl aes-256-cbc -K $encrypted_261f0aee381c_key -iv $encrypted_261f0aee381c_iv -in credentials.tar.gz.enc -out credentials.tar.gz -d
-        - gcloud auth activate-service-account --key-file client-secret.json
-        - gcloud config set app/use_deprecated_preparation True
+        - if [  $TRAVIS_BRANCH = "deploy" ]; then openssl aes-256-cbc -K $encrypted_261f0aee381c_key -iv $encrypted_261f0aee381c_iv -in credentials.tar.gz.enc -out credentials.tar.gz -d; fi
+        - if [  $TRAVIS_BRANCH = "deploy" ]; then gcloud auth activate-service-account --key-file client-secret.json; fi
+        - if [  $TRAVIS_BRANCH = "deploy" ]; then gcloud config set app/use_deprecated_preparation True; fi
       script:
-        - gcloud config set project oceanic-trees-254104
+        - if [  $TRAVIS_BRANCH = "deploy" ]; then gcloud config set project oceanic-trees-254104; fi
         - cd frontend/todo-app
         - npm clean-install
         - CI=false npm run build
