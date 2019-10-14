@@ -15,6 +15,7 @@ com\sept\rest\webservices\restfulwebservices\jwt\JwtInMemoryUserDetailsService.c
 com\sept\rest\webservices\restfulwebservices\martketitem\MarketItemJpaRepository.class
 com\sept\rest\webservices\restfulwebservices\todo\Todo.class
 com\sept\rest\webservices\restfulwebservices\todo\TodoHardcodedService.class
+com\sept\rest\webservices\restfulwebservices\ServletInitializer.class
 com\sept\rest\webservices\restfulwebservices\helloworld\HelloWorldController.class
 com\sept\rest\webservices\restfulwebservices\calendarevent\CalendarEventJpaResource.class
 com\sept\rest\webservices\restfulwebservices\jwt\JwtTokenAuthorizationOncePerRequestFilter.class
