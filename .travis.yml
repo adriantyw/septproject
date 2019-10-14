@@ -24,7 +24,7 @@ matrix:
         - gcloud config set project oceanic-trees-254104
         - cd frontend/todo-app
         - npm clean-install
-        - npm run build
+        - npm run build ignore-warnings
         - gcloud -q app deploy
       skip_files:
         - ^node_modules/.*$ 
