@@ -64,7 +64,7 @@ class CalendarComponent extends Component
                 }
             )
     }
-
+    // days
     weekdays = moment.weekdays();
     weekdaysShort = moment.weekdaysShort();
     months = moment.months();
