@@ -18,9 +18,9 @@ matrix:
         - 12
       sudo: false
       before_install:
-        - then openssl aes-256-cbc -K $encrypted_261f0aee381c_key -iv $encrypted_261f0aee381c_iv -in credentials.tar.gz.enc -out credentials.tar.gz -d
-        - then gcloud auth activate-service-account --key-file client-secret.json
-        - then gcloud config set app/use_deprecated_preparation True
+        - openssl aes-256-cbc -K $encrypted_261f0aee381c_key -iv $encrypted_261f0aee381c_iv -in credentials.tar.gz.enc -out credentials.tar.gz -d
+        - gcloud auth activate-service-account --key-file client-secret.json
+        - gcloud config set app/use_deprecated_preparation True
       script:
         - then gcloud config set project oceanic-trees-254104; fi
         - cd frontend/todo-app
