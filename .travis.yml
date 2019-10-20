@@ -7,7 +7,7 @@ matrix:
         - gcloud auth activate-service-account --key-file client-secret.json
         - export GOOGLE_APPLICATION_CREDENTIALS="$TRAVIS_BUILD_DIR/client-secret.json"
       script:
-        - then gcloud config set project oceanic-trees-254104
+        - gcloud config set project oceanic-trees-254104
         - cd restful-web-services
         - mvn clean install
         - mvn test
