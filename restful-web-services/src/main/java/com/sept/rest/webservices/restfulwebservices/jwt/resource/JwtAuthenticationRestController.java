@@ -59,7 +59,7 @@ public class JwtAuthenticationRestController {
     final String token = authToken.substring(7);
     String username = jwtTokenUtil.getUsernameFromToken(token);
     JwtUserDetails user = (JwtUserDetails) jwtInMemoryUserDetailsService.loadUserByUsername(username);
-
+    
     if (jwtTokenUtil.canTokenBeRefreshed(token)) {
       String refreshedToken = jwtTokenUtil.refreshToken(token);
       return ResponseEntity.ok(new JwtTokenResponse(refreshedToken));

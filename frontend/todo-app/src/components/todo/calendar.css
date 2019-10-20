@@ -11,6 +11,7 @@ tr {
     border: 2px solid rgb(122, 24, 24);
     display: inline-block;
     width: 55%;
+    vertical-align: top;
 }
 
 .calendar {
@@ -38,6 +39,7 @@ tr {
     height: 40px;
 }
 
+
 .week-day {
     font-size: 1.2em;
 }
@@ -61,6 +63,9 @@ tr {
     border-radius: 2%;
     color: white;
 }
+.black {
+    color: black;
+}
 .selected-day {
     width: 28px;
     height: 28px;
@@ -69,6 +74,9 @@ tr {
     color: rgb(255, 0, 0);
 }
 
+.month-label {
+    color: black;
+}
 .month-popup {
     position: absolute;
     padding: 5px;
