@@ -22,7 +22,7 @@ matrix:
         - gcloud auth activate-service-account --key-file client-secret.json
         - gcloud config set app/use_deprecated_preparation True
       script:
-        - then gcloud config set project oceanic-trees-254104; fi
+        - then gcloud config set project oceanic-trees-254104
         - cd frontend/todo-app
         - npm clean-install
         - CI=false npm run build
