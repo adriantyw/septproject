@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 //Controller
 @RestController
-@CrossOrigin(origins="https://oceanic-trees-254104.appspot.com")
+@CrossOrigin(origins="http://localhost:4200")
 //
 public class HelloWorldController {
 

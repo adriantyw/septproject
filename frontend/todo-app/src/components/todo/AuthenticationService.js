@@ -15,6 +15,7 @@ class AuthenticationService {
             username,
             password
         })
+        console.log(prom);
         return prom;
     }
 

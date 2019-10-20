@@ -1,5 +1,6 @@
 package com.sept.rest.webservices.restfulwebservices.martketitem;
 
+
 import java.net.URI;
 import java.util.List;
 
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-@CrossOrigin(origins="https://oceanic-trees-254104.appspot.com")
+@CrossOrigin(origins="http://localhost:4200")
 @RestController
 public class MarketItemJpaResource 
 {
