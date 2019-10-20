@@ -25,7 +25,7 @@ import com.sept.rest.webservices.restfulwebservices.jwt.JwtTokenUtil;
 import com.sept.rest.webservices.restfulwebservices.jwt.JwtUserDetails;
 
 @RestController
-@CrossOrigin(origins="https://oceanic-trees-254104.appspot.com")
+@CrossOrigin(origins="http://localhost:4200")
 public class JwtAuthenticationRestController {
 
   @Value("${jwt.http.request.header}")

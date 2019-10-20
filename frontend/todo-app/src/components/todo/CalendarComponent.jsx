@@ -30,6 +30,8 @@ class CalendarComponent extends Component
 
         this.onSubmit = this.onSubmit.bind(this)
         this.select = this.select.bind(this)
+        this.selectDay = this.selectDay.bind(this)
+
     }
 
     componentWillUnmount()
@@ -83,7 +85,7 @@ class CalendarComponent extends Component
     }
     currentDate = () =>
     {
-        console.log("currentDate: ", this.state.dateContext.get("date"));
+       // console.log("currentDate: ", this.state.dateContext.get("date"));
         return this.state.dateContext.get("date");
     }
     currentDay = () =>
@@ -130,11 +132,18 @@ class CalendarComponent extends Component
 
     select(day)
     {
-        console.log(this.state.selectedDay.format('YYYY-MM-DD'));
+       // console.log(this.state.selectedDay.format('YYYY-MM-DD'));
         this.setState({
             selectedMonth: moment(this.state.selectedMonth).set("date", day),
             selectedDay: moment(this.state.selectedDay).set("date", day),
         });
+    }
+
+    selectDay(day)
+    {
+        this.setState({
+            selectedDay: moment(this.state.selectedDay).set("date", day),
+        });  
     }
 
     renderDayLabel()
@@ -276,17 +285,17 @@ class CalendarComponent extends Component
     onSubmit(values)
     {
         let username = AuthenticationService.getLoggedInUserName()
-
         let event = {
             title: values.title,
             date: values.date
         }
-
+        console.log(event);
         EventDataService.createEvent(username, event)
             .then(() => {
                 this.props.history.push('/calendar/event')
                 this.refreshEvents()
             });
+
     }
 
     // updateEvent(id)
@@ -298,8 +307,10 @@ class CalendarComponent extends Component
     deleteEvent(id)
     {
         let username = AuthenticationService.getLoggedInUserName();
-        EventDataService.deleteEvent(username, id);
-        this.refreshEvents();
+        EventDataService.deleteEvent(username, id)
+        .then(()=>{
+            this.refreshEvents();
+        })
     }
 
     render()
@@ -324,7 +335,8 @@ class CalendarComponent extends Component
         console.log("blanks: ", blanks);
         let selectedDay = this.state.selectedDay;
 
-        let { title, date } = this.state
+        let { title, date } = {title: '',
+                                date: this.state.selectedDay};
         let daysInMonth = [];
         let eventDay = moment();
         for (let d = 1; d <= this.daysInMonth(); d++)
@@ -338,10 +350,9 @@ class CalendarComponent extends Component
             daysInMonth.push(
                 <td key={d} className={className + showEvents} onClick={(e) => { this.select(d) }}>
                     <Popup
-                        trigger={<span>{d}</span>}
+                        trigger={<div>{d}</div>}
                         modal
                         closeOnDocumentClick
-                        
                     >
                         <span>
                             <div className="container">
@@ -354,18 +365,14 @@ class CalendarComponent extends Component
                                 >
                                     {
                                         (props) => (
-                                            <Form /*onSubmit={this.function to push to backend}*/>
-                                                <ErrorMessage name="description" component="div"
-                                                    className="alert alert-warning" />
-                                                <ErrorMessage name="date" component="div"
-                                                    className="alert alert-warning" />
+                                            <Form>
                                                 <fieldset className="form-group">
                                                     <label>{this.renderDayLabel()}</label>
                                                     <Field className="form-control" type="text" name="title" />
                                                 </fieldset>
                                                 <fieldset className="form-group">
-                                                    <label>Target Date</label>
-                                                    <Field className="form-control" type="date" value={this.state.selectedDay.format('YYYY-MM-DD')} name="date" />
+                                                    <label className="black">Target Date</label>
+                                                    <Field disabled className="form-control" type="date" name="date" value={this.state.selectedDay.format('YYYY-MM-DD')} />
                                                 </fieldset>
                                                 <button className="btn btn-success" type="submit">Create Event</button>
                                             </Form>
@@ -464,7 +471,7 @@ class CalendarComponent extends Component
                                         <tr key={events.id}>
                                             <td>{events.username}</td>
                                             <td>{events.title}</td>
-                                            <td>{moment(events.date).format('YYYY-MM-DD')}</td>
+                                            <td>{moment(events.date).format('DD/MM/YYYY')}</td>
                                             <td><button className="btn btn-success" /*onClick={() => this.updateEvent(events.id)}*/>Update</button></td>
                                             <td><button className="btn btn-warning" onClick={() => this.deleteEvent(events.id)}>Delete</button></td>
                                         </tr>
