@@ -21,6 +21,7 @@ import com.sept.rest.webservices.restfulwebservices.calendarevent.CalendarEventJ
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
+@ActiveProfiles("test")
 public class CalendarEventJpaRepositoryTest {
 	
 	 @Autowired

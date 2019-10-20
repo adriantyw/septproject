@@ -19,6 +19,7 @@ import com.sept.rest.webservices.restfulwebservices.martketitem.MarketItemJpaRep
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
+@ActiveProfiles("test")
 public class MarketItemJpaRepositoryTest {
 	
 	 @Autowired
