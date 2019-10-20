@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 //Controller
-@CrossOrigin(origins="http://localhost:4200")
+@CrossOrigin(origins="https://oceanic-trees-254104.appspot.com")
 @RestController
 public class BasicAuthenticationController {
 
