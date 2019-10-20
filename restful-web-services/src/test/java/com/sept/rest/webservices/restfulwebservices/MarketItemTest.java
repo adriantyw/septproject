@@ -11,7 +11,6 @@ import com.sept.rest.webservices.restfulwebservices.martketitem.MarketItem;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
-@ActiveProfiles("test")
 public class MarketItemTest {
 
 	@Test

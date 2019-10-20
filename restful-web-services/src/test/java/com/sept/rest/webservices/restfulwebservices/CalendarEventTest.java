@@ -13,7 +13,6 @@ import com.sept.rest.webservices.restfulwebservices.martketitem.MarketItem;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@ActiveProfiles("test")
 public class CalendarEventTest {
 	@Test
 	public void getIdtest() {
